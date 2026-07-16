@@ -1,0 +1,41 @@
+.env
+.env.*
+!.env.example
+
+# Local source materials; production assets live in public/media.
+/background/
+/donebike/
+/seka exaero GR/
+/seka exceed rdc/
+/seka exceed standart/
+/seka spear rdc/
+/seka spear standart/
+/carbonara logo.png
+/договор публичной оферты.txt
+
+node_modules/
+.next/
+dist/
+build/
+coverage/
+.artifacts/
+*.tsbuildinfo
+
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+.DS_Store
+Thumbs.db
+
+public/media/generated/
+public/media/reference/
+/public/media/donebike/*.jpg
+/public/media/donebike/*.jpeg
+!/public/media/donebike/all/
+!/public/media/donebike/all/**
+uploads/
+
+/scripts/scrape-*.ts

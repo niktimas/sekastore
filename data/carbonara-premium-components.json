@@ -1,0 +1,128 @@
+{
+  "sourceUrl": "https://carbonara-premium.ru/catalog?category=groupsets,saddles,handlebars,accessories",
+  "scrapedAt": "2026-07-16T13:38:15.376Z",
+  "count": 11,
+  "products": [
+    {
+      "slug": "tavelo-rise-handlebar",
+      "brand": "TAVELO",
+      "name": "Rise Handlebar",
+      "category": "handlebar",
+      "priceRub": 28000,
+      "weight": "285 г",
+      "sourceUrl": "https://carbonara-premium.ru/product/tavelo-rise-handlebar",
+      "sourceImageUrl": "https://carbonara-premium.ru/products/tavelo/rise-handlebar.webp",
+      "localImagePath": "/media/imported/carbonara-premium/tavelo-rise-handlebar.webp"
+    },
+    {
+      "slug": "ltwoo-er9",
+      "brand": "L-TWOO",
+      "name": "eR9 Electronic 12s",
+      "category": "groupset",
+      "priceRub": 37000,
+      "weight": null,
+      "sourceUrl": "https://carbonara-premium.ru/product/ltwoo-er9",
+      "sourceImageUrl": "https://carbonara-premium.ru/products/ltwoo/ltwoo-er9.webp",
+      "localImagePath": "/media/imported/carbonara-premium/ltwoo-er9.webp"
+    },
+    {
+      "slug": "seka-exceed-handlebar",
+      "brand": "SEKA",
+      "name": "Exceed Integrated Handlebar",
+      "category": "handlebar",
+      "priceRub": 39900,
+      "weight": "325 г",
+      "sourceUrl": "https://carbonara-premium.ru/product/seka-exceed-handlebar",
+      "sourceImageUrl": "https://carbonara-premium.ru/products/seka/exceed-handlebar.webp",
+      "localImagePath": "/media/imported/carbonara-premium/seka-exceed-handlebar.webp"
+    },
+    {
+      "slug": "farsports-f1s-handlebar",
+      "brand": "FARSPORTS",
+      "name": "F1S Integrated Handlebar",
+      "category": "handlebar",
+      "priceRub": 43900,
+      "weight": "325 г",
+      "sourceUrl": "https://carbonara-premium.ru/product/farsports-f1s-handlebar",
+      "sourceImageUrl": "https://carbonara-premium.ru/products/farsports/f1s-handlebar.webp",
+      "localImagePath": "/media/imported/carbonara-premium/farsports-f1s-handlebar.webp"
+    },
+    {
+      "slug": "ltwoo-erx",
+      "brand": "L-TWOO",
+      "name": "eRX Electronic Carbon 12s",
+      "category": "groupset",
+      "priceRub": 48000,
+      "weight": null,
+      "sourceUrl": "https://carbonara-premium.ru/product/ltwoo-erx",
+      "sourceImageUrl": "https://carbonara-premium.ru/products/ltwoo/ltwoo-erx.webp",
+      "localImagePath": "/media/imported/carbonara-premium/ltwoo-erx.webp"
+    },
+    {
+      "slug": "ltwoo-erx-tt",
+      "brand": "L-TWOO",
+      "name": "eRX-TT Time Trial 12s",
+      "category": "groupset",
+      "priceRub": 52000,
+      "weight": null,
+      "sourceUrl": "https://carbonara-premium.ru/product/ltwoo-erx-tt",
+      "sourceImageUrl": "https://carbonara-premium.ru/products/ltwoo/ltwoo-erx-tt.webp",
+      "localImagePath": "/media/imported/carbonara-premium/ltwoo-erx-tt.webp"
+    },
+    {
+      "slug": "shimano-105-di2",
+      "brand": "Shimano",
+      "name": "105 Di2 R7150",
+      "category": "groupset",
+      "priceRub": 65000,
+      "weight": "2,89 кг",
+      "sourceUrl": "https://carbonara-premium.ru/product/shimano-105-di2",
+      "sourceImageUrl": "https://carbonara-premium.ru/products/shimano/shimano-105-di2.webp",
+      "localImagePath": "/media/imported/carbonara-premium/shimano-105-di2.webp"
+    },
+    {
+      "slug": "shimano-ultegra-di2",
+      "brand": "Shimano",
+      "name": "Ultegra Di2 R8170",
+      "category": "groupset",
+      "priceRub": 125000,
+      "weight": "2,72 кг",
+      "sourceUrl": "https://carbonara-premium.ru/product/shimano-ultegra-di2",
+      "sourceImageUrl": "https://carbonara-premium.ru/products/shimano/shimano-ultegra-di2.webp",
+      "localImagePath": "/media/imported/carbonara-premium/shimano-ultegra-di2.webp"
+    },
+    {
+      "slug": "sram-rival-xplr-axs",
+      "brand": "SRAM",
+      "name": "Rival XPLR AXS",
+      "category": "groupset",
+      "priceRub": 165000,
+      "weight": "2,89 кг",
+      "sourceUrl": "https://carbonara-premium.ru/product/sram-rival-xplr-axs",
+      "sourceImageUrl": "https://carbonara-premium.ru/products/sram/sram-rival-xplr-axs.webp",
+      "localImagePath": "/media/imported/carbonara-premium/sram-rival-xplr-axs.webp"
+    },
+    {
+      "slug": "sram-force-xplr-axs",
+      "brand": "SRAM",
+      "name": "Force XPLR AXS",
+      "category": "groupset",
+      "priceRub": 255000,
+      "weight": "2,69 кг",
+      "sourceUrl": "https://carbonara-premium.ru/product/sram-force-xplr-axs",
+      "sourceImageUrl": "https://carbonara-premium.ru/products/sram/sram-force-xplr-axs.webp",
+      "localImagePath": "/media/imported/carbonara-premium/sram-force-xplr-axs.webp"
+    },
+    {
+      "slug": "sram-red-xplr-axs",
+      "brand": "SRAM",
+      "name": "Red XPLR AXS",
+      "category": "groupset",
+      "priceRub": 460000,
+      "weight": "2,49 кг",
+      "sourceUrl": "https://carbonara-premium.ru/product/sram-red-xplr-axs",
+      "sourceImageUrl": "https://carbonara-premium.ru/products/sram/sram-red-xplr-axs.webp",
+      "localImagePath": "/media/imported/carbonara-premium/sram-red-xplr-axs.webp"
+    }
+  ]
+}
