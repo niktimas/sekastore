@@ -9,7 +9,11 @@ PORT="3000"
 
 PRIMARY_DOMAIN="seka-bike.ru"
 SECONDARY_DOMAIN="seka-bike.store"
-DOMAINS=("${PRIMARY_DOMAIN}" "www.${PRIMARY_DOMAIN}" "${SECONDARY_DOMAIN}" "www.${SECONDARY_DOMAIN}")
+DOMAINS=("${PRIMARY_DOMAIN}" "www.${PRIMARY_DOMAIN}" "${SECONDARY_DOMAIN}")
+
+if [[ "${ADD_WWW_SECONDARY:-0}" == "1" ]]; then
+  DOMAINS+=("www.${SECONDARY_DOMAIN}")
+fi
 
 ADMIN_EMAIL="niktimas696@gmail.com"
 DB_NAME="seka_bike"
