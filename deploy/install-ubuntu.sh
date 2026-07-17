@@ -86,14 +86,14 @@ rsync -a --delete \
   --exclude ".next" \
   --exclude "node_modules" \
   --exclude ".env" \
-  --exclude "background" \
-  --exclude "donebike" \
-  --exclude "seka exaero GR" \
-  --exclude "seka exceed rdc" \
-  --exclude "seka exceed standart" \
-  --exclude "seka spear rdc" \
-  --exclude "seka spear standart" \
-  --exclude "carbonara logo.png" \
+  --exclude "/background/" \
+  --exclude "/donebike/" \
+  --exclude "/seka exaero GR/" \
+  --exclude "/seka exceed rdc/" \
+  --exclude "/seka exceed standart/" \
+  --exclude "/seka spear rdc/" \
+  --exclude "/seka spear standart/" \
+  --exclude "/carbonara logo.png" \
   --exclude "*.txt" \
   --exclude "public/media/reference" \
   --exclude "public/media/donebike/*.jpg" \
