@@ -33,13 +33,13 @@ export const bikeModels: BikeModel[] = [
     sizes: ["XS", "S", "M", "L", "XL"],
     heroColorSlug: "nighthawk-blue",
     colors: [
-      { slug: "chronos", name: "Chronos", swatch: "#b5b0a5", image: "/media/models/spear-rdc/chronos.png", sourceFilename: "chronos.png" },
-      { slug: "meteor-pink", name: "Meteor Pink", swatch: "#d9a2b1", image: "/media/models/spear-rdc/meteor-pink.png", sourceFilename: "meteor pink.png" },
-      { slug: "nighthawk-blue", name: "Nighthawk Blue", swatch: "#263a56", image: "/media/models/spear-rdc/nighthawk-blue.png", sourceFilename: "nighthawk blue.png" },
-      { slug: "shadow-black", name: "Shadow Black", swatch: "#121315", image: "/media/models/spear-rdc/shadow-black.png", sourceFilename: "shadow black.png" },
-      { slug: "solar-bronze", name: "Solar Bronze", swatch: "#9c6843", image: "/media/models/spear-rdc/solar-bronze.png", sourceFilename: "solar bronze.png" },
-      { slug: "thorian-purple", name: "Thorian Purple", swatch: "#6a5484", image: "/media/models/spear-rdc/thorian-purple.png", sourceFilename: "thorian purple.png" },
-      { slug: "ultra-white", name: "Ultra White", swatch: "#f4f3ee", image: "/media/models/spear-rdc/ultra-white.png", sourceFilename: "ultra white.png" }
+      { slug: "chronos", name: "Chronos", swatch: "#b5b0a5", image: "/media/models-clean/seka/spear-rdc/chronos.webp", sourceFilename: "chronos.png" },
+      { slug: "meteor-pink", name: "Meteor Pink", swatch: "#d9a2b1", image: "/media/models-clean/seka/spear-rdc/meteor-pink.webp", sourceFilename: "meteor pink.png" },
+      { slug: "nighthawk-blue", name: "Nighthawk Blue", swatch: "#263a56", image: "/media/models-clean/seka/spear-rdc/nighthawk-blue.webp", sourceFilename: "nighthawk blue.png" },
+      { slug: "shadow-black", name: "Shadow Black", swatch: "#121315", image: "/media/models-clean/seka/spear-rdc/shadow-black.webp", sourceFilename: "shadow black.png" },
+      { slug: "solar-bronze", name: "Solar Bronze", swatch: "#9c6843", image: "/media/models-clean/seka/spear-rdc/solar-bronze.webp", sourceFilename: "solar bronze.png" },
+      { slug: "thorian-purple", name: "Thorian Purple", swatch: "#6a5484", image: "/media/models-clean/seka/spear-rdc/thorian-purple.webp", sourceFilename: "thorian purple.png" },
+      { slug: "ultra-white", name: "Ultra White", swatch: "#f4f3ee", image: "/media/models-clean/seka/spear-rdc/ultra-white.webp", sourceFilename: "ultra white.png" }
     ],
     specs: [
       { label: "Материал", value: "TeXtreme-Framework Foundation" },
@@ -65,12 +65,12 @@ export const bikeModels: BikeModel[] = [
     sizes: ["XS", "S", "M", "L", "XL"],
     heroColorSlug: "twilight-blue",
     colors: [
-      { slug: "achromatic-silver", name: "Achromatic Silver", swatch: "#c9c9c4", image: "/media/models/spear-standard/achromatic-silver.png", sourceFilename: "achromatic silver.png" },
+      { slug: "achromatic-silver", name: "Achromatic Silver", swatch: "#c9c9c4", image: "/media/models-clean/seka/spear/achromatic-silver.webp", sourceFilename: "achromatic silver.png" },
       { slug: "borealis-blue", name: "Borealis Blue", swatch: "#395569", image: "/media/models/spear-standard/borealis-blue.png", sourceFilename: "borealis blue.png" },
-      { slug: "cosmic-beige", name: "Cosmic Beige", swatch: "#d0c0a5", image: "/media/models/spear-standard/cosmic-beige.png", sourceFilename: "cosmic beige.png" },
-      { slug: "frosty-blue", name: "Frosty Blue", swatch: "#b7d1dc", image: "/media/models/spear-standard/frosty-blue.png", sourceFilename: "frosty blue.png" },
-      { slug: "mint-green", name: "Mint Green", swatch: "#99c7af", image: "/media/models/spear-standard/mint-green.png", sourceFilename: "mint green.png" },
-      { slug: "twilight-blue", name: "Twilight Blue", swatch: "#324b79", image: "/media/models/spear-standard/twilight-blue.png", sourceFilename: "twilight blue.png" }
+      { slug: "cosmic-beige", name: "Cosmic Beige", swatch: "#d0c0a5", image: "/media/models-clean/seka/spear/cosmic-beige.webp", sourceFilename: "cosmic beige.png" },
+      { slug: "frosty-blue", name: "Frosty Blue", swatch: "#b7d1dc", image: "/media/models-clean/seka/spear/frosty-blue.webp", sourceFilename: "frosty blue.png" },
+      { slug: "mint-green", name: "Mint Green", swatch: "#99c7af", image: "/media/models-clean/seka/spear/mint-green.webp", sourceFilename: "mint green.png" },
+      { slug: "twilight-blue", name: "Twilight Blue", swatch: "#324b79", image: "/media/models-clean/seka/spear/twilight-blue.webp", sourceFilename: "twilight blue.png" }
     ],
     specs: [
       { label: "Материал", value: "TeXtreme-Framework Foundation" },
@@ -126,8 +126,8 @@ export const bikeModels: BikeModel[] = [
     sizes: ["XS", "S", "M", "L", "XL"],
     heroColorSlug: "ice-lake-blue",
     colors: [
-      { slug: "arctic-grey", name: "Arctic Grey", swatch: "#b9b9b3", image: "/media/models/exceed-standard/arctic-grey.png", sourceFilename: "arcticgrey.png" },
-      { slug: "aurora-green", name: "Aurora Green", swatch: "#7aa092", image: "/media/models/exceed-standard/aurora-green.png", sourceFilename: "aurora green.png" },
+      { slug: "arctic-grey", name: "Arctic Grey", swatch: "#b9b9b3", image: "/media/models-clean/seka/exceed/arctic-grey.webp", sourceFilename: "arcticgrey.png" },
+      { slug: "aurora-green", name: "Aurora Green", swatch: "#7aa092", image: "/media/models-clean/seka/exceed/aurora-green.webp", sourceFilename: "aurora green.png" },
       { slug: "ice-lake-blue", name: "Ice Lake Blue", swatch: "#a9c9d8", image: "/media/models/exceed-standard/ice-lake-blue.png", sourceFilename: "ice lake blue.png" },
       { slug: "lilac-dream", name: "Lilac Dream", swatch: "#b6a8ce", image: "/media/models/exceed-standard/lilac-dream.png", sourceFilename: "lilac dream.png" }
     ],
