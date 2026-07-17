@@ -80,6 +80,11 @@ if [[ -z "${NEXTAUTH_SECRET}" ]]; then
 fi
 
 echo "==> Syncing project to ${APP_DIR}"
+if [[ ! -f "${SOURCE_DIR}/public/media/donebike/all/bike-01.jpg" ]]; then
+  echo "Gallery image check failed in source: ${SOURCE_DIR}/public/media/donebike/all/bike-01.jpg is missing."
+  exit 1
+fi
+
 rsync -a --delete \
   --exclude ".git" \
   --exclude ".artifacts" \
@@ -101,6 +106,10 @@ rsync -a --delete \
   --exclude "scripts/scrape-*.ts" \
   --exclude "*.tsbuildinfo" \
   "${SOURCE_DIR}/" "${APP_DIR}/"
+
+echo "==> Syncing gallery images"
+install -d -m 755 "${APP_DIR}/public/media/donebike/all"
+rsync -a --delete "${SOURCE_DIR}/public/media/donebike/all/" "${APP_DIR}/public/media/donebike/all/"
 chown -R "${APP_USER}:${APP_USER}" "${APP_DIR}"
 
 if [[ ! -f "${APP_DIR}/public/media/donebike/all/bike-01.jpg" ]]; then
