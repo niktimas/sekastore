@@ -96,6 +96,38 @@ curl -fsSL https://raw.githubusercontent.com/USER/REPO/main/deploy/bootstrap-ubu
 - ежедневные PostgreSQL-бэкапы в `/var/backups/seka-bike`;
 - автоматические security-updates Ubuntu.
 
+## Обновление production
+
+После первой установки для выкладки новых изменений использовать отдельный скрипт:
+
+```bash
+cd /opt/seka-bike-source
+sudo bash deploy/update-ubuntu.sh
+```
+
+Если проект был установлен вручную из `~/seka-bike`, зайти в эту папку и выполнить:
+
+```bash
+sudo bash deploy/update-ubuntu.sh
+```
+
+Скрипт обновления:
+
+- подтягивает свежий `main` из GitHub;
+- синхронизирует код в `/var/www/seka-bike`;
+- проверяет наличие фото галереи `public/media/donebike/all/bike-01.jpg`;
+- устанавливает зависимости;
+- применяет Prisma-миграции;
+- собирает Next.js;
+- удаляет dev-зависимости;
+- перезапускает systemd-сервис.
+
+Seed при обычном обновлении не запускается, чтобы не перетирать правки из админки. Если нужно принудительно обновить базовые данные:
+
+```bash
+sudo RUN_SEED=1 bash deploy/update-ubuntu.sh
+```
+
 ## Полезные команды на сервере
 
 ```bash

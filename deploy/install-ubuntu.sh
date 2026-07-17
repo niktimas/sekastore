@@ -94,7 +94,7 @@ rsync -a --delete \
   --exclude "seka spear rdc" \
   --exclude "seka spear standart" \
   --exclude "carbonara logo.png" \
-  --exclude "договор публичной оферты.txt" \
+  --exclude "*.txt" \
   --exclude "public/media/reference" \
   --exclude "public/media/donebike/*.jpg" \
   --exclude "public/media/donebike/*.jpeg" \
@@ -102,6 +102,11 @@ rsync -a --delete \
   --exclude "*.tsbuildinfo" \
   "${SOURCE_DIR}/" "${APP_DIR}/"
 chown -R "${APP_USER}:${APP_USER}" "${APP_DIR}"
+
+if [[ ! -f "${APP_DIR}/public/media/donebike/all/bike-01.jpg" ]]; then
+  echo "Gallery image check failed: ${APP_DIR}/public/media/donebike/all/bike-01.jpg is missing."
+  exit 1
+fi
 
 echo "==> Configuring PostgreSQL"
 systemctl enable --now postgresql
@@ -390,3 +395,4 @@ echo "Credentials saved to: ${CREDENTIALS_FILE}"
 echo "Service: systemctl status ${APP_NAME}"
 echo "Logs:    journalctl -u ${APP_NAME} -f"
 echo "=============================================="
+
