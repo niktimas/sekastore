@@ -124,12 +124,10 @@ export const bikeModels: BikeModel[] = [
     description:
       "Exceed Standard объединяет аэродинамическую геометрию, стабильность и комфорт. В комплект входят рама, интегрированный руль GEN 2, вилка, подседельный штырь и оси. Полностью внутренняя проводка и карбон T1100/T800 дают отзывчивую платформу для разных дорог.",
     sizes: ["XS", "S", "M", "L", "XL"],
-    heroColorSlug: "ice-lake-blue",
+    heroColorSlug: "arctic-grey",
     colors: [
       { slug: "arctic-grey", name: "Arctic Grey", swatch: "#b9b9b3", image: "/media/models-clean/seka/exceed/arctic-grey.webp", sourceFilename: "arcticgrey.png" },
-      { slug: "aurora-green", name: "Aurora Green", swatch: "#7aa092", image: "/media/models-clean/seka/exceed/aurora-green.webp", sourceFilename: "aurora green.png" },
-      { slug: "ice-lake-blue", name: "Ice Lake Blue", swatch: "#a9c9d8", image: "/media/models/exceed-standard/ice-lake-blue.png", sourceFilename: "ice lake blue.png" },
-      { slug: "lilac-dream", name: "Lilac Dream", swatch: "#b6a8ce", image: "/media/models/exceed-standard/lilac-dream.png", sourceFilename: "lilac dream.png" }
+      { slug: "aurora-green", name: "Aurora Green", swatch: "#7aa092", image: "/media/models-clean/seka/exceed/aurora-green.webp", sourceFilename: "aurora green.png" }
     ],
     specs: [
       { label: "Материал", value: "Карбон T1100 + T800" },

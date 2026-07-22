@@ -26,8 +26,8 @@ export const readyBikes: InventoryRow[] = [
   {
     model: "SEKA Exceed",
     modelSlug: "exceed-standard",
-    color: "Ice Lake Blue",
-    colorSlug: "ice-lake-blue",
+    color: "Aurora Green",
+    colorSlug: "aurora-green",
     size: "L",
     cockpit: "400*100",
     price: 294900,
@@ -58,8 +58,8 @@ export const frames: InventoryRow[] = [
   {
     model: "SEKA Exceed",
     modelSlug: "exceed-standard",
-    color: "Ice Lake Blue",
-    colorSlug: "ice-lake-blue",
+    color: "Aurora Green",
+    colorSlug: "aurora-green",
     size: "S, M, M, L, XL, XL",
     cockpit: "400*100",
     price: 139800
