@@ -3,17 +3,12 @@ import { NextRequest, NextResponse } from "next/server";
 const TAVELO_HOSTS = new Set(["tavelo.ru", "www.tavelo.ru"]);
 
 function rewriteToTavelo(request: NextRequest, pathname: string) {
-  const url = request.nextUrl.clone();
-  const forwardedHost = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
-  const forwardedProto = request.headers.get("x-forwarded-proto") ?? "https";
+  const url = new URL(request.url);
 
   url.pathname = pathname;
-
-  if (forwardedHost) {
-    url.host = forwardedHost;
-  }
-
-  url.protocol = `${forwardedProto}:`;
+  url.protocol = "http:";
+  url.hostname = "127.0.0.1";
+  url.port = process.env.PORT ?? "3000";
 
   return NextResponse.rewrite(url);
 }
