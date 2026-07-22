@@ -2,6 +2,22 @@ import { NextRequest, NextResponse } from "next/server";
 
 const TAVELO_HOSTS = new Set(["tavelo.ru", "www.tavelo.ru"]);
 
+function rewriteToTavelo(request: NextRequest, pathname: string) {
+  const url = request.nextUrl.clone();
+  const forwardedHost = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
+  const forwardedProto = request.headers.get("x-forwarded-proto") ?? "https";
+
+  url.pathname = pathname;
+
+  if (forwardedHost) {
+    url.host = forwardedHost;
+  }
+
+  url.protocol = `${forwardedProto}:`;
+
+  return NextResponse.rewrite(url);
+}
+
 export function middleware(request: NextRequest) {
   const host = request.headers.get("host")?.split(":")[0]?.toLowerCase();
 
@@ -12,9 +28,7 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (pathname === "/robots.txt" || pathname === "/sitemap.xml") {
-    const url = request.nextUrl.clone();
-    url.pathname = `/tavelo${pathname}`;
-    return NextResponse.rewrite(url);
+    return rewriteToTavelo(request, `/tavelo${pathname}`);
   }
 
   if (
@@ -27,11 +41,8 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const url = request.nextUrl.clone();
-
   if (pathname === "/") {
-    url.pathname = "/tavelo";
-    return NextResponse.rewrite(url);
+    return rewriteToTavelo(request, "/tavelo");
   }
 
   if (
@@ -40,8 +51,7 @@ export function middleware(request: NextRequest) {
     pathname === "/build-options" ||
     pathname === "/contacts"
   ) {
-    url.pathname = `/tavelo${pathname}`;
-    return NextResponse.rewrite(url);
+    return rewriteToTavelo(request, `/tavelo${pathname}`);
   }
 
   return NextResponse.next();
