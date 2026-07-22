@@ -5,8 +5,8 @@ import { TaveloHeader } from "@/components/tavelo-header";
 import { formatTaveloPrice, getTaveloHeroColor, taveloModels } from "@/lib/tavelo-catalog";
 
 export const metadata = {
-  title: "Tavelo в наличии",
-  description: "Фреймсеты Tavelo под заказ и из наличия в России."
+  title: "Наличие Tavelo | Carbonara Bike",
+  description: "Проверка наличия фреймсетов Tavelo, цветов, размеров и сроков поставки по России."
 };
 
 export default function TaveloInventoryPage() {
@@ -14,9 +14,12 @@ export default function TaveloInventoryPage() {
     <div className="tavelo-shell">
       <TaveloHeader />
       <main className="tavelo-simple-page">
-        <p className="tavelo-kicker">Stock</p>
-        <h1>Фреймсеты Tavelo</h1>
-        <p>Проверим наличие конкретного SKU, размер и срок поставки перед подтверждением заказа.</p>
+        <p className="tavelo-kicker">Наличие</p>
+        <h1>Фреймсеты Tavelo под заказ и из поставок Carbonara Bike</h1>
+        <p>
+          Актуальные цвета и размеры быстро меняются. Перед оплатой мы проверяем доступность нужного варианта,
+          согласуем срок поставки и помогаем выбрать размер под рост и посадку.
+        </p>
         <div className="tavelo-stock-list">
           {taveloModels.map((model) => {
             const color = getTaveloHeroColor(model);
@@ -26,15 +29,15 @@ export default function TaveloInventoryPage() {
                   <Image src={color.image} alt={model.name} fill sizes="160px" />
                 </div>
                 <strong>{model.name}</strong>
-                <span>{model.colors.length} SKU</span>
+                <span>{model.category}</span>
                 <b>{formatTaveloPrice(model.price)}</b>
                 <OrderButton
                   className="tavelo-link-button"
                   title={model.name}
-                  details={`Проверить наличие Tavelo ${model.family}`}
-                  status="Tavelo"
+                  details={`Проверить наличие, цвет и размер ${model.family}`}
+                  status="Проверка наличия Tavelo"
                   price={formatTaveloPrice(model.price)}
-                  actionLabel="Проверить наличие"
+                  actionLabel="Заказать из наличия"
                 />
               </article>
             );

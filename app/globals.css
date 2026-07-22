@@ -620,8 +620,10 @@ img {
 
 .tavelo-shell {
   min-height: 100vh;
-  background: #121212;
-  color: #f4f4ef;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(203, 196, 181, 0.32), transparent 28rem),
+    linear-gradient(180deg, #f7f5f0 0%, #eeebe3 54%, #f7f5f0 100%);
+  color: #1d1914;
   font-family: var(--font-manrope), Arial, sans-serif;
 }
 
@@ -629,14 +631,13 @@ img {
   color: inherit;
 }
 
-.tavelo-topline {
-  background: #9cff5f;
-  color: #050505;
-  padding: 9px 24px;
-  text-align: center;
-  font-size: 14px;
-  font-weight: 900;
-  letter-spacing: 0.01em;
+.tavelo-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(247, 245, 240, 0.86);
+  border-bottom: 1px solid rgba(45, 39, 31, 0.1);
+  backdrop-filter: blur(18px);
 }
 
 .tavelo-nav {
@@ -644,18 +645,19 @@ img {
   align-items: center;
   justify-content: space-between;
   gap: 28px;
-  min-height: 112px;
-  padding: 0 clamp(24px, 6vw, 76px);
-  background: #282828;
+  min-height: 74px;
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: 0 clamp(18px, 5vw, 64px);
 }
 
 .tavelo-logo {
   font-family: var(--font-inter), Arial, sans-serif;
-  font-size: clamp(34px, 5vw, 64px);
-  font-weight: 1000;
-  font-style: italic;
-  letter-spacing: -0.08em;
+  font-size: clamp(24px, 3vw, 40px);
+  font-weight: 950;
+  letter-spacing: 0;
   text-decoration: none;
+  text-transform: uppercase;
 }
 
 .tavelo-nav__links {
@@ -663,7 +665,9 @@ img {
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
-  gap: clamp(18px, 4vw, 58px);
+  gap: clamp(14px, 3vw, 34px);
+  color: rgba(29, 25, 20, 0.72);
+  font-size: 14px;
   font-weight: 850;
 }
 
@@ -673,17 +677,19 @@ img {
 }
 
 .tavelo-nav__links a:hover {
-  color: #9cff5f;
+  color: #1d1914;
   transform: translateY(-1px);
 }
 
 .tavelo-hero {
   display: grid;
-  grid-template-columns: minmax(320px, 0.85fr) minmax(0, 1.15fr);
-  gap: clamp(18px, 4vw, 64px);
+  grid-template-columns: minmax(320px, 0.82fr) minmax(0, 1.18fr);
+  gap: clamp(24px, 5vw, 72px);
   align-items: center;
-  min-height: calc(100svh - 145px);
-  padding: clamp(38px, 7vw, 90px) clamp(24px, 6vw, 76px);
+  min-height: calc(100svh - 74px);
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: clamp(42px, 7vw, 94px) clamp(18px, 5vw, 64px) clamp(36px, 6vw, 78px);
   overflow: hidden;
 }
 
@@ -695,21 +701,21 @@ img {
 
 .tavelo-kicker {
   margin: 0 0 12px;
-  color: #9cff5f;
+  color: #827260;
   font-size: 12px;
   font-weight: 950;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .tavelo-hero h1 {
+  max-width: 660px;
   margin: 0;
   font-family: var(--font-inter), Arial, sans-serif;
-  font-size: clamp(78px, 15vw, 190px);
-  font-weight: 1000;
-  font-style: italic;
-  letter-spacing: -0.09em;
-  line-height: 0.82;
+  font-size: clamp(42px, 5.8vw, 82px);
+  font-weight: 940;
+  letter-spacing: 0;
+  line-height: 0.96;
 }
 
 .tavelo-hero p:not(.tavelo-kicker),
@@ -717,16 +723,16 @@ img {
 .tavelo-feature p,
 .tavelo-cta p:not(.tavelo-kicker),
 .tavelo-simple-page > p {
-  max-width: 700px;
-  color: rgba(244, 244, 239, 0.72);
-  font-size: clamp(16px, 1.7vw, 22px);
-  line-height: 1.5;
+  max-width: 720px;
+  color: rgba(29, 25, 20, 0.68);
+  font-size: clamp(16px, 1.3vw, 20px);
+  line-height: 1.62;
 }
 
 .tavelo-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 12px;
   margin-top: 30px;
 }
 
@@ -736,33 +742,47 @@ img {
   align-items: center;
   justify-content: center;
   gap: 10px;
+  min-height: 46px;
   border: 0;
-  border-radius: 0;
-  background: #9cff5f;
-  color: #050505;
-  padding: 15px 24px;
+  border-radius: 999px;
+  background: #1d1914;
+  color: #fffaf0;
+  padding: 13px 22px;
   font: inherit;
-  font-weight: 950;
+  font-size: 14px;
+  font-weight: 900;
   text-decoration: none;
   cursor: pointer;
-  transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+  transition: transform 180ms ease, background 180ms ease, color 180ms ease, box-shadow 180ms ease;
+}
+
+.tavelo-shell .tavelo-button {
+  color: #fffaf0;
 }
 
 .tavelo-button:hover,
 .tavelo-link-button:hover {
   transform: translateY(-2px);
-  background: #ffffff;
+  background: #3a3128;
+  box-shadow: 0 16px 34px rgba(29, 25, 20, 0.14);
 }
 
 .tavelo-button--ghost {
-  background: transparent;
-  color: #f4f4ef;
-  box-shadow: inset 0 0 0 1px rgba(244, 244, 239, 0.32);
+  background: rgba(255, 255, 255, 0.46);
+  color: #1d1914;
+  box-shadow: inset 0 0 0 1px rgba(45, 39, 31, 0.16);
+}
+
+.tavelo-shell .tavelo-button--ghost {
+  color: #1d1914;
 }
 
 .tavelo-hero__media {
   position: relative;
-  min-height: min(58vw, 620px);
+  min-height: min(52vw, 620px);
+  border-radius: 28px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.74), rgba(209, 201, 187, 0.34));
+  box-shadow: inset 0 0 0 1px rgba(45, 39, 31, 0.08);
   animation: taveloFloatIn 760ms ease both;
 }
 
@@ -776,29 +796,41 @@ img {
 }
 
 .tavelo-section {
-  padding: clamp(54px, 8vw, 112px) clamp(24px, 6vw, 76px);
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: clamp(54px, 8vw, 112px) clamp(18px, 5vw, 64px);
 }
 
 .tavelo-runner {
   position: sticky;
-  top: 0;
-  z-index: 5;
+  top: 74px;
+  z-index: 12;
   display: flex;
-  gap: clamp(18px, 5vw, 70px);
+  justify-content: center;
+  gap: 8px;
   overflow-x: auto;
-  border-top: 1px solid rgba(244, 244, 239, 0.1);
-  border-bottom: 1px solid rgba(244, 244, 239, 0.1);
-  background: rgba(18, 18, 18, 0.92);
-  padding-top: 18px;
-  padding-bottom: 18px;
+  padding: 12px clamp(18px, 5vw, 64px);
+  background: rgba(238, 235, 227, 0.88);
+  border-top: 1px solid rgba(45, 39, 31, 0.08);
+  border-bottom: 1px solid rgba(45, 39, 31, 0.08);
   backdrop-filter: blur(16px);
 }
 
-.tavelo-runner span {
+.tavelo-runner a {
   flex: 0 0 auto;
-  color: rgba(244, 244, 239, 0.62);
-  font-weight: 950;
-  text-transform: uppercase;
+  border-radius: 999px;
+  color: rgba(29, 25, 20, 0.7);
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 900;
+  text-decoration: none;
+  transition: background 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.tavelo-runner a:hover {
+  background: #1d1914;
+  color: #fffaf0;
+  transform: translateY(-1px);
 }
 
 .tavelo-section__head {
@@ -812,32 +844,35 @@ img {
 .tavelo-cta h2,
 .tavelo-simple-page h1,
 .tavelo-model h1 {
-  max-width: 940px;
+  max-width: 980px;
   margin: 0;
   font-family: var(--font-inter), Arial, sans-serif;
-  font-size: clamp(42px, 7vw, 96px);
-  font-weight: 950;
-  letter-spacing: -0.04em;
-  line-height: 0.94;
+  font-size: clamp(32px, 4.3vw, 64px);
+  font-weight: 930;
+  letter-spacing: 0;
+  line-height: 1.02;
 }
 
 .tavelo-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(30px, 5vw, 74px) clamp(22px, 4vw, 56px);
+  gap: clamp(24px, 4vw, 48px);
 }
 
 .tavelo-product {
   display: grid;
   gap: 18px;
+  scroll-margin-top: 150px;
 }
 
 .tavelo-product__image {
   position: relative;
   display: block;
   aspect-ratio: 1.22;
-  background: #191919;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.5);
   overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(45, 39, 31, 0.1);
 }
 
 .tavelo-product__image img {
@@ -847,7 +882,7 @@ img {
 }
 
 .tavelo-product:hover .tavelo-product__image img {
-  transform: scale(1.045);
+  transform: scale(1.04);
 }
 
 .tavelo-product__meta {
@@ -856,21 +891,21 @@ img {
 }
 
 .tavelo-product__meta span {
-  color: rgba(244, 244, 239, 0.5);
+  color: #827260;
   font-size: 12px;
   font-weight: 950;
   text-transform: uppercase;
 }
 
 .tavelo-product__meta strong {
-  font-size: 20px;
+  font-size: 21px;
 }
 
 .tavelo-product__meta p {
-  min-height: 54px;
+  min-height: 70px;
   margin: 0;
-  color: rgba(244, 244, 239, 0.64);
-  line-height: 1.45;
+  color: rgba(29, 25, 20, 0.64);
+  line-height: 1.5;
 }
 
 .tavelo-product__meta div {
@@ -881,54 +916,65 @@ img {
   font-weight: 900;
 }
 
-.tavelo-product__meta a {
+.tavelo-product__meta a,
+.tavelo-text-link {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: #9cff5f;
+  color: #1d1914;
+  font-weight: 900;
 }
 
 .tavelo-feature {
   display: grid;
-  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1fr);
+  grid-template-columns: minmax(280px, 0.82fr) minmax(0, 1fr);
   gap: clamp(24px, 6vw, 76px);
   align-items: center;
-  padding: clamp(54px, 8vw, 110px) clamp(24px, 6vw, 76px);
-  background: #242424;
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: clamp(54px, 8vw, 110px) clamp(18px, 5vw, 64px);
+  background: rgba(255, 255, 255, 0.36);
 }
 
 .tavelo-feature--compact {
   margin-top: 44px;
+  border-radius: 26px;
 }
 
 .tavelo-feature strong,
 .tavelo-price {
   display: block;
   margin: 20px 0;
-  font-size: clamp(28px, 4vw, 52px);
+  font-size: clamp(26px, 3.2vw, 46px);
   line-height: 1;
 }
 
 .tavelo-feature__image {
   position: relative;
-  min-height: min(44vw, 480px);
+  min-height: min(42vw, 470px);
+  border-radius: 24px;
+  background: rgba(247, 245, 240, 0.72);
 }
 
 .tavelo-cta {
-  padding: clamp(70px, 10vw, 140px) clamp(24px, 6vw, 76px);
-  background: #9cff5f;
-  color: #050505;
+  padding: clamp(64px, 9vw, 118px) clamp(18px, 5vw, 64px);
+  background: #1d1914;
+  color: #fffaf0;
 }
 
 .tavelo-cta .tavelo-kicker,
 .tavelo-cta p {
-  color: #050505;
+  color: rgba(255, 250, 240, 0.72);
 }
 
 .tavelo-cta .tavelo-button {
   margin-top: 28px;
-  background: #050505;
-  color: #f4f4ef;
+  background: #fffaf0;
+  color: #1d1914;
+}
+
+.tavelo-shell .tavelo-cta .tavelo-button {
+  color: #1d1914;
 }
 
 .tavelo-model {
@@ -936,7 +982,9 @@ img {
   grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
   gap: clamp(24px, 5vw, 72px);
   align-items: center;
-  padding: clamp(34px, 6vw, 76px);
+  width: min(1440px, 100%);
+  margin: 0 auto;
+  padding: clamp(34px, 6vw, 76px) clamp(18px, 5vw, 64px);
 }
 
 .tavelo-back {
@@ -944,14 +992,16 @@ img {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: #9cff5f;
+  color: #827260;
   font-weight: 900;
 }
 
 .tavelo-model__media {
   position: relative;
-  min-height: min(58vw, 640px);
-  background: #202020;
+  min-height: min(54vw, 620px);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(45, 39, 31, 0.1);
 }
 
 .tavelo-model__media img {
@@ -959,7 +1009,7 @@ img {
 }
 
 .tavelo-model__body p {
-  color: rgba(244, 244, 239, 0.7);
+  color: rgba(29, 25, 20, 0.68);
   font-size: 18px;
   line-height: 1.6;
 }
@@ -969,18 +1019,20 @@ img {
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1px;
   margin: 24px 0;
-  background: rgba(244, 244, 239, 0.12);
+  overflow: hidden;
+  border-radius: 18px;
+  background: rgba(45, 39, 31, 0.12);
 }
 
 .tavelo-specs div {
   display: grid;
   gap: 6px;
-  background: #171717;
+  background: rgba(255, 255, 255, 0.54);
   padding: 18px;
 }
 
 .tavelo-specs span {
-  color: rgba(244, 244, 239, 0.46);
+  color: #827260;
   font-size: 12px;
   font-weight: 900;
   text-transform: uppercase;
@@ -1000,7 +1052,9 @@ img {
 .tavelo-color__image {
   position: relative;
   aspect-ratio: 1.28;
-  background: #202020;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: inset 0 0 0 1px rgba(45, 39, 31, 0.1);
 }
 
 .tavelo-color__image img {
@@ -1014,71 +1068,95 @@ img {
 
 .tavelo-color p {
   margin: 0 0 14px;
-  color: rgba(244, 244, 239, 0.58);
+  color: rgba(29, 25, 20, 0.58);
 }
 
 .tavelo-color span {
   display: inline-block;
   width: 32px;
   height: 6px;
+  border-radius: 999px;
 }
 
 .tavelo-link-button {
+  min-height: 0;
   padding: 0;
   background: transparent;
-  color: #9cff5f;
+  color: #1d1914;
   text-decoration: underline;
+  box-shadow: none;
+}
+
+.tavelo-shell .tavelo-link-button {
+  color: #1d1914;
 }
 
 .tavelo-link-button:hover {
   background: transparent;
-  color: #ffffff;
+  color: #827260;
+  box-shadow: none;
 }
 
 .tavelo-simple-page {
   min-height: 70svh;
-  padding: clamp(48px, 8vw, 110px) clamp(24px, 6vw, 76px);
+  width: min(1240px, 100%);
+  margin: 0 auto;
+  padding: clamp(52px, 8vw, 108px) clamp(18px, 5vw, 64px);
 }
 
 .tavelo-stock-list {
   display: grid;
-  gap: 1px;
+  gap: 10px;
   margin-top: 42px;
-  background: rgba(244, 244, 239, 0.12);
 }
 
 .tavelo-stock-list article {
   display: grid;
-  grid-template-columns: 120px minmax(180px, 1fr) 90px 160px auto;
-  gap: 22px;
+  grid-template-columns: 112px minmax(180px, 1fr) minmax(140px, 0.55fr) 140px auto;
+  gap: 18px;
   align-items: center;
-  background: #171717;
-  padding: 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.5);
+  padding: 14px;
+  box-shadow: inset 0 0 0 1px rgba(45, 39, 31, 0.08);
 }
 
 .tavelo-stock-list article > div {
   position: relative;
-  width: 120px;
-  height: 78px;
-  background: #242424;
+  width: 112px;
+  height: 74px;
+  border-radius: 14px;
+  background: rgba(247, 245, 240, 0.88);
+}
+
+.tavelo-stock-list article span {
+  color: rgba(29, 25, 20, 0.58);
 }
 
 .tavelo-contacts div {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 12px;
   margin: 34px 0;
 }
 
 .tavelo-contacts a {
-  background: #9cff5f;
-  color: #050505;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  background: #1d1914;
+  color: #fffaf0;
   padding: 12px 18px;
-  font-weight: 950;
+  font-weight: 900;
+  text-decoration: none;
 }
 
 .tavelo-contacts address {
-  color: rgba(244, 244, 239, 0.68);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(29, 25, 20, 0.68);
   font-style: normal;
 }
 
@@ -1087,18 +1165,27 @@ img {
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 28px;
   align-items: end;
-  padding: 46px clamp(24px, 6vw, 76px);
-  border-top: 1px solid rgba(244, 244, 239, 0.1);
-  background: #050505;
+  padding: 42px clamp(18px, 5vw, 64px);
+  border-top: 1px solid rgba(45, 39, 31, 0.1);
+  background: #f7f5f0;
 }
 
 .tavelo-footer p {
-  max-width: 620px;
-  color: rgba(244, 244, 239, 0.58);
+  max-width: 680px;
+  color: rgba(29, 25, 20, 0.62);
+}
+
+.tavelo-footer small {
+  display: block;
+  max-width: 760px;
+  color: rgba(29, 25, 20, 0.52);
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 .tavelo-footer nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 18px;
 }
 
@@ -1134,12 +1221,18 @@ img {
   }
 
   .tavelo-nav {
-    justify-items: start;
-    padding-top: 18px;
-    padding-bottom: 18px;
+    align-items: flex-start;
+    flex-direction: column;
+    padding-top: 14px;
+    padding-bottom: 14px;
   }
 
   .tavelo-nav__links {
+    justify-content: flex-start;
+  }
+
+  .tavelo-runner {
+    top: 116px;
     justify-content: flex-start;
   }
 
@@ -1156,10 +1249,6 @@ img {
     width: 96px;
     height: 72px;
     grid-row: span 4;
-  }
-
-  .tavelo-footer nav {
-    flex-wrap: wrap;
   }
 }
 

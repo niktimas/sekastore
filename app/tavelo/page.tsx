@@ -7,13 +7,13 @@ import { TaveloHeader } from "@/components/tavelo-header";
 import { formatTaveloPrice, getTaveloHeroColor, taveloCockpit, taveloModels } from "@/lib/tavelo-catalog";
 
 export const metadata = {
-  title: "TAVELO Russia",
-  description: "Фреймсеты Tavelo в России: AROW Race, AROW SL, Arden, GROW и WILD.",
+  title: "Tavelo в России | Carbonara Bike",
+  description: "Фреймсеты Tavelo в России: AROW Race, AROW SL, Arden, GROW и WILD. Подбор размера, цвета, компонентов и доставка.",
   openGraph: {
-    title: "TAVELO Russia",
-    description: "Фреймсеты Tavelo в России: AROW Race, AROW SL, Arden, GROW и WILD.",
+    title: "Tavelo в России | Carbonara Bike",
+    description: "Фреймсеты Tavelo в России: шоссе, выносливость и гравийные платформы под кастомную сборку.",
     url: "https://tavelo.ru",
-    siteName: "TAVELO Russia",
+    siteName: "Tavelo Carbonara Bike",
     locale: "ru_RU",
     type: "website"
   }
@@ -29,48 +29,49 @@ export default function TaveloHomePage() {
       <main>
         <section className="tavelo-hero">
           <div className="tavelo-hero__copy">
-            <p className="tavelo-kicker">Carbonara Bike · Tavelo Russia</p>
-            <h1>TAVELO</h1>
+            <p className="tavelo-kicker">Tavelo в Carbonara Bike</p>
+            <h1>Фреймсеты Tavelo для кастомной сборки</h1>
             <p>
-              Аэродинамические шоссейные и гравийные фреймсеты Tavelo в России. Подбор размера, проверка SKU,
-              комплектация сборки и доставка по РФ.
+              Подберем модель, цвет, размер и комплектующие под вашу посадку и задачи. Работаем по России и ближайшему СНГ,
+              доставляем СДЭК/ПЭК, перед заказом проверяем актуальное наличие и сроки поставки.
             </p>
             <div className="tavelo-actions">
               <Link className="tavelo-button" href="#models">
-                Bikes <ArrowRight size={18} />
+                Каталог моделей <ArrowRight size={18} />
               </Link>
               <OrderButton
                 className="tavelo-button tavelo-button--ghost"
-                title="TAVELO frameset"
-                details="Подбор модели, цвета и размера Tavelo"
-                status="Заявка"
-                actionLabel="Подобрать Tavelo"
+                title="Tavelo"
+                details="Подбор фреймсета Tavelo, цвета, размера и комплектации"
+                status="Заявка с Tavelo"
+                actionLabel="Получить консультацию"
               />
             </div>
           </div>
           <div className="tavelo-hero__media">
-            <Image src={heroColor.image} alt={heroModel.name} fill priority sizes="(max-width: 900px) 100vw, 62vw" />
+            <Image src={heroColor.image} alt={heroModel.name} fill priority sizes="(max-width: 900px) 100vw, 58vw" />
           </div>
         </section>
 
-        <section className="tavelo-section tavelo-runner" aria-label="Tavelo lines">
-          <span>AROW Race</span>
-          <span>AROW SL</span>
-          <span>Arden</span>
-          <span>GROW</span>
-          <span>WILD</span>
+        <section className="tavelo-runner" aria-label="Модельный ряд Tavelo">
+          {taveloModels.map((model) => (
+            <Link key={model.slug} href={`#${model.slug}`}>
+              {model.family}
+            </Link>
+          ))}
         </section>
 
         <section className="tavelo-section" id="models">
           <div className="tavelo-section__head">
-            <p className="tavelo-kicker">All framesets</p>
-            <h2>Road aero, light road and gravel platforms</h2>
+            <p className="tavelo-kicker">Каталог</p>
+            <h2>Шоссейные и гравийные фреймсеты Tavelo</h2>
+            <p>Выберите платформу, откройте модель и оставьте заявку на нужный цвет или сборку.</p>
           </div>
           <div className="tavelo-grid">
             {taveloModels.map((model) => {
               const color = getTaveloHeroColor(model);
               return (
-                <article className="tavelo-product" key={model.slug}>
+                <article className="tavelo-product" id={model.slug} key={model.slug}>
                   <Link className="tavelo-product__image" href={`/models/${model.slug}`}>
                     <Image src={color.image} alt={model.name} fill sizes="(max-width: 900px) 100vw, 33vw" />
                   </Link>
@@ -93,10 +94,13 @@ export default function TaveloHomePage() {
 
         <section className="tavelo-feature">
           <div>
-            <p className="tavelo-kicker">Cockpit</p>
-            <h2>{taveloCockpit.name}</h2>
+            <p className="tavelo-kicker">Компоненты</p>
+            <h2>Кокпит Tavelo для аккуратной интеграции</h2>
             <p>{taveloCockpit.description}</p>
             <strong>{formatTaveloPrice(taveloCockpit.price)}</strong>
+            <Link className="tavelo-text-link" href="/build-options">
+              Смотреть компоненты <ArrowRight size={16} />
+            </Link>
           </div>
           <div className="tavelo-feature__image">
             <Image src={taveloCockpit.image} alt={taveloCockpit.name} fill sizes="(max-width: 900px) 100vw, 46vw" />
@@ -104,13 +108,14 @@ export default function TaveloHomePage() {
         </section>
 
         <section className="tavelo-cta">
-          <p className="tavelo-kicker">Order in Russia</p>
-          <h2>Соберем Tavelo под задачу, рост и бюджет.</h2>
+          <p className="tavelo-kicker">Заявка</p>
+          <h2>Соберем Tavelo под рост, стиль езды и бюджет.</h2>
+          <p>Напишите нам, если хотите уточнить наличие, заказать фреймсет или собрать велосипед целиком.</p>
           <OrderButton
             className="tavelo-button"
-            title="TAVELO frameset"
+            title="Tavelo"
             details="Подбор фреймсета Tavelo и комплектации"
-            status="Заявка"
+            status="Заявка с Tavelo"
             actionLabel="Оставить заявку"
           />
         </section>

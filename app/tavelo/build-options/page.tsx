@@ -5,8 +5,8 @@ import { TaveloHeader } from "@/components/tavelo-header";
 import { formatTaveloPrice, taveloCockpit } from "@/lib/tavelo-catalog";
 
 export const metadata = {
-  title: "Tavelo Gear",
-  description: "Кокпиты и компоненты для сборок Tavelo."
+  title: "Компоненты Tavelo | Carbonara Bike",
+  description: "Кокпиты и компоненты Tavelo для кастомной сборки велосипеда."
 };
 
 export default function TaveloBuildOptionsPage() {
@@ -14,19 +14,23 @@ export default function TaveloBuildOptionsPage() {
     <div className="tavelo-shell">
       <TaveloHeader />
       <main className="tavelo-simple-page">
-        <p className="tavelo-kicker">Gear</p>
-        <h1>Компоненты для сборки</h1>
-        <p>Базовый компонент Tavelo для полной сборки: аэрококпит Rise Handlebar.</p>
+        <p className="tavelo-kicker">Компоненты</p>
+        <h1>Кокпиты и детали для сборки Tavelo</h1>
+        <p>
+          Подберем совместимый кокпит, трансмиссию, колеса и посадочные размеры под выбранный фреймсет.
+          Ниже базовый компонент Tavelo, который чаще всего используют для аккуратной интегрированной сборки.
+        </p>
         <section className="tavelo-feature tavelo-feature--compact">
           <div>
+            <p className="tavelo-kicker">Карбоновый кокпит</p>
             <h2>{taveloCockpit.name}</h2>
             <p>{taveloCockpit.description}</p>
             <strong>{formatTaveloPrice(taveloCockpit.price)}</strong>
             <OrderButton
               className="tavelo-button"
               title={taveloCockpit.name}
-              details="Карбоновый интегрированный кокпит Tavelo"
-              status="Tavelo"
+              details="Карбоновый интегрированный кокпит Tavelo. Подобрать ширину и вынос"
+              status="Заявка на компонент Tavelo"
               price={formatTaveloPrice(taveloCockpit.price)}
               actionLabel="Заказать кокпит"
             />

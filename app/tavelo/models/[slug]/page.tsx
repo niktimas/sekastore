@@ -20,13 +20,13 @@ export async function generateMetadata({ params }: TaveloModelPageProps) {
   const model = getTaveloModelBySlug(slug);
 
   return {
-    title: model ? model.name : "Tavelo",
+    title: model ? `${model.name} | Tavelo в России` : "Tavelo",
     description: model?.tagline ?? "Фреймсеты Tavelo в России.",
     openGraph: {
-      title: model ? model.name : "Tavelo",
+      title: model ? `${model.name} | Tavelo в России` : "Tavelo",
       description: model?.tagline ?? "Фреймсеты Tavelo в России.",
       url: model ? `https://tavelo.ru/models/${model.slug}` : "https://tavelo.ru",
-      siteName: "TAVELO Russia",
+      siteName: "Tavelo Carbonara Bike",
       locale: "ru_RU",
       type: "website"
     }
@@ -48,8 +48,8 @@ export default async function TaveloModelPage({ params }: TaveloModelPageProps) 
       <TaveloHeader />
       <main>
         <section className="tavelo-model">
-          <Link className="tavelo-back" href="/">
-            <ArrowLeft size={17} /> All products
+          <Link className="tavelo-back" href="/#models">
+            <ArrowLeft size={17} /> Вернуться в каталог
           </Link>
           <div className="tavelo-model__media">
             <Image src={heroColor.image} alt={model.name} fill priority sizes="(max-width: 900px) 100vw, 54vw" />
@@ -70,8 +70,8 @@ export default async function TaveloModelPage({ params }: TaveloModelPageProps) 
             <OrderButton
               className="tavelo-button"
               title={model.name}
-              details={`${heroColor.name} / SKU ${heroColor.sku}`}
-              status="Tavelo"
+              details={`${heroColor.name}. Подбор размера и проверка наличия`}
+              status="Заявка на Tavelo"
               price={formatTaveloPrice(model.price)}
               actionLabel="Заказать фреймсет"
             />
@@ -80,8 +80,9 @@ export default async function TaveloModelPage({ params }: TaveloModelPageProps) 
 
         <section className="tavelo-section">
           <div className="tavelo-section__head">
-            <p className="tavelo-kicker">SKU / colors</p>
-            <h2>Доступные варианты</h2>
+            <p className="tavelo-kicker">Цвета</p>
+            <h2>Доступные варианты {model.family}</h2>
+            <p>Нажмите на нужный цвет, чтобы отправить заявку уже с выбранной моделью и вариантом окраса.</p>
           </div>
           <div className="tavelo-color-grid">
             {model.colors.map((color) => (
@@ -92,12 +93,12 @@ export default async function TaveloModelPage({ params }: TaveloModelPageProps) 
                 <div>
                   <span style={{ backgroundColor: color.swatch }} />
                   <h3>{color.name}</h3>
-                  <p>SKU: {color.sku}</p>
+                  <p>Цвет будет подставлен в заявку автоматически.</p>
                   <OrderButton
                     className="tavelo-link-button"
                     title={model.name}
-                    details={`${color.name} / SKU ${color.sku}`}
-                    status="Tavelo"
+                    details={`${color.name}. Подбор размера и проверка наличия`}
+                    status="Заявка на Tavelo"
                     price={formatTaveloPrice(model.price)}
                     actionLabel="Заказать этот цвет"
                   />
