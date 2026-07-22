@@ -32,16 +32,6 @@ export const readyBikes: InventoryRow[] = [
     cockpit: "400*100",
     price: 294900,
     build: "Shimano 105 Di2, Superteam, GP 5000 Ultrasport. Собран, 7.7 кг"
-  },
-  {
-    model: "SEKA Exceed RDC",
-    modelSlug: "exceed-rdc",
-    color: "Seafoam Green",
-    colorSlug: "seafoam-green",
-    size: "XL (184-193)",
-    cockpit: "400*100",
-    price: 379900,
-    build: "Shimano D2 Ultegra, Superteam, Michelin Power Cup 28. Собран, 7.3 кг"
   }
 ];
 

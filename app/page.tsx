@@ -41,13 +41,12 @@ export default async function HomePage() {
           <div className="line-links" aria-label="Линейки SEKA">
             <Link href="#spear-rdc">SEKA SPEAR RDC</Link>
             <Link href="#spear-standard">SEKA SPEAR Standard</Link>
-            <Link href="#exceed-rdc">SEKA EXCEED RDC</Link>
             <Link href="#exceed-standard">SEKA EXCEED Standard</Link>
             <Link href="#exaero-gr">SEKA ExAeroGR</Link>
           </div>
           <div className="section__head section__head--intro">
             <p>
-              Пять актуальных фреймсетов: гоночный Spear, универсальный Exceed и быстрый гравийный Exaero GR.
+              Четыре актуальных фреймсета: гоночный Spear, универсальный Exceed и быстрый гравийный Exaero GR.
             </p>
           </div>
           <div className="model-list">

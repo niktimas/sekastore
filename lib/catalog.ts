@@ -85,36 +85,6 @@ export const bikeModels: BikeModel[] = [
     ]
   },
   {
-    slug: "exceed-rdc",
-    name: "SEKA Exceed RDC",
-    line: "Exceed",
-    version: "RDC",
-    category: "Шоссейный endurance-race",
-    tagline: "SEKA EXCEED RDC. Аэродинамический фреймсет гоночного уровня, в котором сочетаются легкость, технологичность и комфорт для длительных заездов.",
-    description:
-      "Exceed RDC сочетает нацеленную на скорость геометрию с дополнительным комфортом. Карбон Toray T1100/T800, оптимизированная аэродинамика труб, интегрированный GEN 2 Cockpit и полностью скрытая проводка делают модель сильной платформой для гранфондо и динамичного шоссе.",
-    sizes: ["XS", "S", "M", "L", "XL"],
-    heroColorSlug: "lightspeed",
-    colors: [
-      { slug: "charcoal-matte-black", name: "Charcoal Matte Black", swatch: "#181817", image: "/media/models/exceed-rdc/charcoal-matte-black.png", sourceFilename: "Charcoal matte black.png" },
-      { slug: "lightspeed", name: "Lightspeed", swatch: "#c6ced0", image: "/media/models/exceed-rdc/lightspeed.png", sourceFilename: "lightspeed.png" },
-      { slug: "pearl-white", name: "Pearl White", swatch: "#efeee7", image: "/media/models/exceed-rdc/pearl-white.png", sourceFilename: "pearl white.png" },
-      { slug: "seafoam-green", name: "Seafoam Green", swatch: "#9dbdb0", image: "/media/models/exceed-rdc/seafoam-green.png", sourceFilename: "seaform green.png" },
-      { slug: "turismo-silver-metallic", name: "Turismo Silver Metallic", swatch: "#a5a89f", image: "/media/models/exceed-rdc/turismo-silver-metallic.png", sourceFilename: "turismo silver metallic.png" }
-    ],
-    specs: [
-      { label: "Материал", value: "Toray T1100 + T800" },
-      { label: "Вес рамы", value: "Около 720 г, размер M, без покраски" },
-      { label: "Вилка", value: "Карбон, около 360 г" },
-      { label: "Руль", value: "GEN 2 Integrated Cockpit" },
-      { label: "Покрышки", value: "До 30 мм" },
-      { label: "Геометрия", value: "Endurance-race" },
-      { label: "Тормоза", value: "Дисковые, flat mount" },
-      { label: "Оси", value: "12x100 мм / 12x142 мм" },
-      { label: "Сертификация", value: "UCI Approved" }
-    ]
-  },
-  {
     slug: "exceed-standard",
     name: "SEKA Exceed Standard",
     line: "Exceed",
