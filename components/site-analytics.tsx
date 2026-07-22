@@ -33,7 +33,17 @@ function sendMetrics(sessionId: string, events: AnalyticsEvent[]) {
     return;
   }
 
-  const payload = JSON.stringify({ sessionId, events });
+  const host = window.location.hostname;
+  const brand = host.includes("tavelo.ru") || window.location.pathname.startsWith("/tavelo") ? "tavelo" : "seka";
+  const enrichedEvents = events.map((event) => ({
+    ...event,
+    metadata: {
+      ...(event.metadata ?? {}),
+      brand,
+      host
+    }
+  }));
+  const payload = JSON.stringify({ sessionId, events: enrichedEvents });
 
   if (navigator.sendBeacon) {
     const blob = new Blob([payload], { type: "application/json" });

@@ -3,15 +3,47 @@ import { redirect } from "next/navigation";
 import { AdminNav } from "@/components/admin-nav";
 import { createModelAction, deleteModelAction, updateModelAction } from "@/app/admin/actions";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
+import { adminBrands, resolveAdminBrand } from "@/lib/admin-brand";
 import { prisma } from "@/lib/prisma";
+import { formatTaveloPrice, taveloModels } from "@/lib/tavelo-catalog";
 
 export const metadata: Metadata = {
   title: "Модели | Админка"
 };
 
-export default async function AdminModelsPage() {
+type AdminModelsPageProps = {
+  searchParams: Promise<{ brand?: string }>;
+};
+
+export default async function AdminModelsPage({ searchParams }: AdminModelsPageProps) {
   if (!(await isAdminAuthenticated())) {
     redirect("/admin/login");
+  }
+
+  const brand = await resolveAdminBrand(await searchParams);
+
+  if (brand === "tavelo") {
+    return (
+      <main className="admin-page">
+        <AdminNav brand={brand} />
+        <section className="page-title">
+          <p className="eyebrow">Модели / {adminBrands[brand].label}</p>
+          <h1>Каталог Tavelo</h1>
+          <p>Эти модели опубликованы на tavelo.ru. Пока они живут отдельно от SEKA-каталога, поэтому здесь показан отдельный Tavelo-список без смешивания с SEKA.</p>
+        </section>
+        <section className="admin-grid">
+          {taveloModels.map((model) => (
+            <div className="admin-card" key={model.slug}>
+              <span>{model.category}</span>
+              <strong>{model.name}</strong>
+              <small>
+                {formatTaveloPrice(model.price)} / цветов: {model.colors.length}
+              </small>
+            </div>
+          ))}
+        </section>
+      </main>
+    );
   }
 
   const [models, lines] = await Promise.all([
@@ -24,7 +56,7 @@ export default async function AdminModelsPage() {
 
   return (
     <main className="admin-page">
-      <AdminNav />
+      <AdminNav brand={brand} />
       <section className="page-title">
         <p className="eyebrow">Админка</p>
         <h1>Модели</h1>

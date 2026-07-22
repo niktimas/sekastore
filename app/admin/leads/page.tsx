@@ -2,11 +2,16 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { AdminNav } from "@/components/admin-nav";
 import { createLeadAction, deleteLeadAction, updateLeadAction } from "@/app/admin/actions";
+import { adminBrands, resolveAdminBrand, type AdminBrand } from "@/lib/admin-brand";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
   title: "Заявки | Админка"
+};
+
+type AdminLeadsPageProps = {
+  searchParams: Promise<{ brand?: string }>;
 };
 
 const statuses = [
@@ -16,13 +21,25 @@ const statuses = [
   ["cancelled", "Отменена"]
 ];
 
-export default async function AdminLeadsPage() {
+function leadWhere(brand: AdminBrand) {
+  const tavelo = {
+    OR: [{ message: { contains: "Tavelo", mode: "insensitive" as const } }, { model: { name: { contains: "Tavelo", mode: "insensitive" as const } } }]
+  };
+
+  return brand === "tavelo" ? tavelo : { NOT: tavelo };
+}
+
+export default async function AdminLeadsPage({ searchParams }: AdminLeadsPageProps) {
   if (!(await isAdminAuthenticated())) {
     redirect("/admin/login");
   }
 
+  const brand = await resolveAdminBrand(await searchParams);
+  const where = leadWhere(brand);
+
   const [leads, models, colors, sizes] = await Promise.all([
     prisma.lead.findMany({
+      where,
       orderBy: { createdAt: "desc" },
       include: { model: true, color: true, size: true }
     }),
@@ -33,10 +50,11 @@ export default async function AdminLeadsPage() {
 
   return (
     <main className="admin-page">
-      <AdminNav />
+      <AdminNav brand={brand} />
       <section className="page-title">
-        <p className="eyebrow">Админка</p>
-        <h1>Заявки</h1>
+        <p className="eyebrow">Заявки / {adminBrands[brand].label}</p>
+        <h1>Заявки клиентов</h1>
+        <p>Показаны обращения, относящиеся к выбранному сайту. Для Tavelo фильтр ориентируется на текст заявки и название товара.</p>
       </section>
 
       <section className="admin-panel">
@@ -77,7 +95,7 @@ export default async function AdminLeadsPage() {
               </option>
             ))}
           </select>
-          <textarea name="message" placeholder="Комментарий" />
+          <textarea name="message" placeholder={brand === "tavelo" ? "Комментарий. Для Tavelo укажите Tavelo в тексте" : "Комментарий"} />
           <button className="button button--dark" type="submit">
             Создать заявку
           </button>

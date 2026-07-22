@@ -2427,6 +2427,14 @@ body {
   gap: 8px;
 }
 
+.admin-nav__brand-switch {
+  display: flex;
+  gap: 6px;
+  padding: 4px;
+  border-radius: 999px;
+  background: #edf4ff;
+}
+
 .admin-nav a {
   padding: 10px 13px;
   border-radius: 999px;
@@ -2438,6 +2446,12 @@ body {
 .admin-nav a:hover {
   background: #edf4ff;
   color: var(--accent);
+}
+
+.admin-nav__brand-switch a:hover,
+.admin-nav__brand-switch a.is-active {
+  background: var(--accent);
+  color: #ffffff;
 }
 
 .admin-grid {

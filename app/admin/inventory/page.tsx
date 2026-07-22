@@ -7,7 +7,9 @@ import {
   updateInventoryItemAction
 } from "@/app/admin/actions";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
+import { adminBrands, resolveAdminBrand } from "@/lib/admin-brand";
 import { prisma } from "@/lib/prisma";
+import { formatTaveloPrice, getTaveloHeroColor, taveloModels } from "@/lib/tavelo-catalog";
 
 export const metadata: Metadata = {
   title: "Наличие | Админка"
@@ -29,9 +31,42 @@ function price(value: number) {
   return new Intl.NumberFormat("ru-RU").format(value);
 }
 
-export default async function AdminInventoryPage() {
+type AdminInventoryPageProps = {
+  searchParams: Promise<{ brand?: string }>;
+};
+
+export default async function AdminInventoryPage({ searchParams }: AdminInventoryPageProps) {
   if (!(await isAdminAuthenticated())) {
     redirect("/admin/login");
+  }
+
+  const brand = await resolveAdminBrand(await searchParams);
+
+  if (brand === "tavelo") {
+    return (
+      <main className="admin-page">
+        <AdminNav brand={brand} />
+        <section className="page-title">
+          <p className="eyebrow">Наличие / {adminBrands[brand].label}</p>
+          <h1>Наличие Tavelo</h1>
+          <p>Витрина Tavelo сейчас использует отдельный каталог фреймсетов. Ниже показаны модели, которые видит клиент на tavelo.ru.</p>
+        </section>
+        <section className="admin-grid">
+          {taveloModels.map((model) => {
+            const color = getTaveloHeroColor(model);
+            return (
+              <div className="admin-card" key={model.slug}>
+                <span>{model.category}</span>
+                <strong>{model.name}</strong>
+                <small>
+                  {formatTaveloPrice(model.price)} / цветов: {model.colors.length} / основной цвет: {color.name}
+                </small>
+              </div>
+            );
+          })}
+        </section>
+      </main>
+    );
   }
 
   const [items, models, colors, sizes, buildOptions] = await Promise.all([
@@ -47,7 +82,7 @@ export default async function AdminInventoryPage() {
 
   return (
     <main className="admin-page">
-      <AdminNav />
+      <AdminNav brand={brand} />
       <section className="page-title">
         <p className="eyebrow">Админка</p>
         <h1>Наличие</h1>

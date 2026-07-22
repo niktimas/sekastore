@@ -3,7 +3,9 @@ import { redirect } from "next/navigation";
 import { AdminNav } from "@/components/admin-nav";
 import { createBuildOptionAction, deleteBuildOptionAction, updateBuildOptionAction } from "@/app/admin/actions";
 import { isAdminAuthenticated } from "@/lib/admin-auth";
+import { adminBrands, resolveAdminBrand } from "@/lib/admin-brand";
 import { prisma } from "@/lib/prisma";
+import { formatTaveloPrice, taveloCockpit } from "@/lib/tavelo-catalog";
 
 export const metadata: Metadata = {
   title: "Компоненты | Админка"
@@ -31,9 +33,35 @@ function price(value: number) {
   return new Intl.NumberFormat("ru-RU").format(value);
 }
 
-export default async function AdminBuildOptionsPage() {
+type AdminBuildOptionsPageProps = {
+  searchParams: Promise<{ brand?: string }>;
+};
+
+export default async function AdminBuildOptionsPage({ searchParams }: AdminBuildOptionsPageProps) {
   if (!(await isAdminAuthenticated())) {
     redirect("/admin/login");
+  }
+
+  const brand = await resolveAdminBrand(await searchParams);
+
+  if (brand === "tavelo") {
+    return (
+      <main className="admin-page">
+        <AdminNav brand={brand} />
+        <section className="page-title">
+          <p className="eyebrow">Компоненты / {adminBrands[brand].label}</p>
+          <h1>Компоненты Tavelo</h1>
+          <p>Сейчас на Tavelo-витрине опубликован базовый компонент для сборки. Полное редактирование Tavelo-компонентов можно вынести в базу отдельным следующим шагом.</p>
+        </section>
+        <section className="admin-grid">
+          <div className="admin-card">
+            <span>Кокпит</span>
+            <strong>{taveloCockpit.name}</strong>
+            <small>{formatTaveloPrice(taveloCockpit.price)} / {taveloCockpit.weight}</small>
+          </div>
+        </section>
+      </main>
+    );
   }
 
   const options = await prisma.buildOption.findMany({
@@ -42,7 +70,7 @@ export default async function AdminBuildOptionsPage() {
 
   return (
     <main className="admin-page">
-      <AdminNav />
+      <AdminNav brand={brand} />
       <section className="page-title">
         <p className="eyebrow">Админка</p>
         <h1>Компоненты</h1>
