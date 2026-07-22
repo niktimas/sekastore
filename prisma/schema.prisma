@@ -18,34 +18,34 @@ model ProductLine {
 }
 
 model Model {
-  id                       String          @id @default(uuid()) @db.Uuid
-  lineId                   String          @map("line_id") @db.Uuid
-  slug                     String          @unique
-  name                     String
-  version                  String?
-  category                 String
-  shortDescription         String?         @map("short_description")
-  description              String?
-  frameWeightGrams         Int?            @map("frame_weight_grams")
-  forkWeightGrams          Int?            @map("fork_weight_grams")
-  maxTireWidthFrontMm      Int?            @map("max_tire_width_front_mm")
-  maxTireWidthRearMm       Int?            @map("max_tire_width_rear_mm")
-  brakeType                String?         @map("brake_type")
-  axleStandard             String?         @map("axle_standard")
-  cockpit                  String?
-  drivetrainCompatibility  String?         @map("drivetrain_compatibility")
-  isUciApproved            Boolean?        @map("is_uci_approved")
-  sortOrder                Int             @default(100) @map("sort_order")
-  isPublished              Boolean         @default(false) @map("is_published")
-  createdAt                DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt                DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
-  line                     ProductLine     @relation(fields: [lineId], references: [id])
-  specs                    ModelSpec[]
-  sizes                    Size[]
-  colors                   Color[]
-  mediaAssets              MediaAsset[]
-  inventoryItems           InventoryItem[]
-  leads                    Lead[]
+  id                      String          @id @default(uuid()) @db.Uuid
+  lineId                  String          @map("line_id") @db.Uuid
+  slug                    String          @unique
+  name                    String
+  version                 String?
+  category                String
+  shortDescription        String?         @map("short_description")
+  description             String?
+  frameWeightGrams        Int?            @map("frame_weight_grams")
+  forkWeightGrams         Int?            @map("fork_weight_grams")
+  maxTireWidthFrontMm     Int?            @map("max_tire_width_front_mm")
+  maxTireWidthRearMm      Int?            @map("max_tire_width_rear_mm")
+  brakeType               String?         @map("brake_type")
+  axleStandard            String?         @map("axle_standard")
+  cockpit                 String?
+  drivetrainCompatibility String?         @map("drivetrain_compatibility")
+  isUciApproved           Boolean?        @map("is_uci_approved")
+  sortOrder               Int             @default(100) @map("sort_order")
+  isPublished             Boolean         @default(false) @map("is_published")
+  createdAt               DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt               DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
+  line                    ProductLine     @relation(fields: [lineId], references: [id])
+  specs                   ModelSpec[]
+  sizes                   Size[]
+  colors                  Color[]
+  mediaAssets             MediaAsset[]
+  inventoryItems          InventoryItem[]
+  leads                   Lead[]
 
   @@map("models")
 }
@@ -128,29 +128,29 @@ model BuildOption {
 }
 
 model InventoryItem {
-  id            String       @id @default(uuid()) @db.Uuid
-  modelId       String       @map("model_id") @db.Uuid
-  colorId       String?      @map("color_id") @db.Uuid
-  sizeId        String?      @map("size_id") @db.Uuid
-  buildOptionId String?      @map("build_option_id") @db.Uuid
-  itemType      String       @default("frame") @map("item_type")
-  displayModel  String?      @map("display_model")
-  displayColor  String?      @map("display_color")
-  displaySize   String?      @map("display_size")
-  cockpit       String?
-  price         Int          @default(0)
-  buildDescription String?   @map("build_description")
-  quantity      Int?
-  status        String       @default("unknown")
-  isPublished   Boolean      @default(true) @map("is_published")
-  sortOrder     Int          @default(100) @map("sort_order")
-  sourceDate    DateTime?    @map("source_date") @db.Date
-  sourceNote    String?      @map("source_note")
-  updatedAt     DateTime     @updatedAt @map("updated_at") @db.Timestamptz(6)
-  model         Model        @relation(fields: [modelId], references: [id])
-  color         Color?       @relation(fields: [colorId], references: [id])
-  size          Size?        @relation(fields: [sizeId], references: [id])
-  buildOption   BuildOption? @relation(fields: [buildOptionId], references: [id])
+  id               String       @id @default(uuid()) @db.Uuid
+  modelId          String       @map("model_id") @db.Uuid
+  colorId          String?      @map("color_id") @db.Uuid
+  sizeId           String?      @map("size_id") @db.Uuid
+  buildOptionId    String?      @map("build_option_id") @db.Uuid
+  itemType         String       @default("frame") @map("item_type")
+  displayModel     String?      @map("display_model")
+  displayColor     String?      @map("display_color")
+  displaySize      String?      @map("display_size")
+  cockpit          String?
+  price            Int          @default(0)
+  buildDescription String?      @map("build_description")
+  quantity         Int?
+  status           String       @default("unknown")
+  isPublished      Boolean      @default(true) @map("is_published")
+  sortOrder        Int          @default(100) @map("sort_order")
+  sourceDate       DateTime?    @map("source_date") @db.Date
+  sourceNote       String?      @map("source_note")
+  updatedAt        DateTime     @updatedAt @map("updated_at") @db.Timestamptz(6)
+  model            Model        @relation(fields: [modelId], references: [id])
+  color            Color?       @relation(fields: [colorId], references: [id])
+  size             Size?        @relation(fields: [sizeId], references: [id])
+  buildOption      BuildOption? @relation(fields: [buildOptionId], references: [id])
 
   @@map("inventory_items")
 }
@@ -172,4 +172,22 @@ model Lead {
   size      Size?    @relation(fields: [sizeId], references: [id])
 
   @@map("leads")
+}
+
+model AnalyticsEvent {
+  id            String   @id @default(uuid()) @db.Uuid
+  sessionHash   String   @map("session_hash")
+  eventType     String   @map("event_type")
+  path          String
+  target        String?
+  referrer      String?
+  metadata      Json?
+  ipHash        String?  @map("ip_hash")
+  userAgentHash String?  @map("user_agent_hash")
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([createdAt])
+  @@index([eventType, createdAt])
+  @@index([path, createdAt])
+  @@map("analytics_events")
 }

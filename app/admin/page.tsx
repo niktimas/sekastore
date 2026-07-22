@@ -14,19 +14,21 @@ export default async function AdminPage() {
     redirect("/admin/login");
   }
 
-  const [leadCount, newLeadCount, inventoryCount, buildOptionCount, modelCount] = await Promise.all([
+  const [leadCount, newLeadCount, inventoryCount, buildOptionCount, modelCount, analyticsCount] = await Promise.all([
     prisma.lead.count(),
     prisma.lead.count({ where: { status: "new" } }),
     prisma.inventoryItem.count(),
     prisma.buildOption.count(),
-    prisma.model.count()
+    prisma.model.count(),
+    prisma.analyticsEvent.count()
   ]);
 
   const cards = [
     { href: "/admin/leads", label: "Заявки", value: leadCount, note: `${newLeadCount} новых` },
     { href: "/admin/inventory", label: "Наличие", value: inventoryCount, note: "велосипеды и фреймы" },
     { href: "/admin/build-options", label: "Компоненты", value: buildOptionCount, note: "системы, рули и колеса" },
-    { href: "/admin/models", label: "Модели", value: modelCount, note: "каталог SEKA" }
+    { href: "/admin/models", label: "Модели", value: modelCount, note: "каталог SEKA" },
+    { href: "/admin/analytics", label: "Метрики", value: analyticsCount, note: "события поведения" }
   ];
 
   return (

@@ -4,9 +4,17 @@ set -Eeuo pipefail
 APP_NAME="seka-bike"
 APP_DIR="/var/www/${APP_NAME}"
 APP_USER="seka"
+PORT="3000"
 SOURCE_DIR="${SOURCE_DIR:-$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)}"
 BRANCH="${BRANCH:-main}"
 RUN_SEED="${RUN_SEED:-0}"
+PRIMARY_DOMAIN="seka-bike.ru"
+SECONDARY_DOMAIN="seka-bike.store"
+DOMAINS=("${PRIMARY_DOMAIN}" "www.${PRIMARY_DOMAIN}" "${SECONDARY_DOMAIN}")
+
+if [[ "${ADD_WWW_SECONDARY:-0}" == "1" ]]; then
+  DOMAINS+=("www.${SECONDARY_DOMAIN}")
+fi
 
 if [[ "${EUID}" -ne 0 ]]; then
   echo "Run as root: sudo bash deploy/update-ubuntu.sh"
@@ -84,6 +92,117 @@ sudo -u "${APP_USER}" npm run build
 
 echo "==> Pruning development dependencies"
 sudo -u "${APP_USER}" npm prune --omit=dev
+
+echo "==> Refreshing Nginx limits and bot protection"
+cat > "/etc/nginx/conf.d/${APP_NAME}-limits.conf" <<'NGINX'
+limit_req_zone $binary_remote_addr zone=seka_global:20m rate=8r/s;
+limit_req_zone $binary_remote_addr zone=seka_forms:10m rate=3r/m;
+limit_req_zone $binary_remote_addr zone=seka_login:10m rate=5r/m;
+limit_req_zone $binary_remote_addr zone=seka_admin:10m rate=2r/s;
+limit_req_zone $binary_remote_addr zone=seka_metrics:10m rate=30r/m;
+limit_conn_zone $binary_remote_addr zone=seka_conn:10m;
+
+map $http_user_agent $seka_blocked_bot {
+    default 0;
+    ~*(gptbot|chatgpt-user|ccbot|anthropic-ai|claudebot|perplexitybot|bytespider|amazonbot|applebot-extended|semrushbot|ahrefsbot|mj12bot|dotbot|petalbot|scrapy|python-requests|curl|wget|httpclient|headlesschrome) 1;
+}
+NGINX
+
+cat > "/etc/nginx/snippets/${APP_NAME}-security-headers.conf" <<'NGINX'
+add_header X-Frame-Options "SAMEORIGIN" always;
+add_header X-Content-Type-Options "nosniff" always;
+add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+NGINX
+
+cat > "/etc/nginx/snippets/${APP_NAME}-admin-noindex.conf" <<'NGINX'
+add_header X-Robots-Tag "noindex, nofollow" always;
+NGINX
+
+cat > "/etc/nginx/snippets/${APP_NAME}-proxy.conf" <<NGINX
+proxy_pass http://127.0.0.1:${PORT};
+proxy_http_version 1.1;
+proxy_set_header Upgrade \$http_upgrade;
+proxy_set_header Connection "upgrade";
+proxy_set_header Host \$host;
+proxy_set_header X-Real-IP \$remote_addr;
+proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto \$scheme;
+proxy_cache_bypass \$http_upgrade;
+NGINX
+
+if [[ -f "/etc/nginx/sites-available/${APP_NAME}" ]] && grep -q "listen 443" "/etc/nginx/sites-available/${APP_NAME}"; then
+  echo "==> Keeping existing HTTPS Nginx site config. Run install script on a clean server to regenerate the full site block."
+else
+cat > "/etc/nginx/sites-available/${APP_NAME}" <<NGINX
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    return 444;
+}
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name ${DOMAINS[*]};
+
+    client_max_body_size 30M;
+    server_tokens off;
+
+    include /etc/nginx/snippets/${APP_NAME}-security-headers.conf;
+
+    location = /robots.txt {
+        include /etc/nginx/snippets/${APP_NAME}-proxy.conf;
+    }
+
+    location = /sitemap.xml {
+        include /etc/nginx/snippets/${APP_NAME}-proxy.conf;
+    }
+
+    location = /api/metrics {
+        if (\$seka_blocked_bot) { return 403; }
+        limit_req zone=seka_metrics burst=20 nodelay;
+        include /etc/nginx/snippets/${APP_NAME}-proxy.conf;
+    }
+
+    location = /api/orders {
+        if (\$seka_blocked_bot) { return 403; }
+        limit_req zone=seka_forms burst=3 nodelay;
+        include /etc/nginx/snippets/${APP_NAME}-proxy.conf;
+    }
+
+    location = /api/leads {
+        if (\$seka_blocked_bot) { return 403; }
+        limit_req zone=seka_forms burst=3 nodelay;
+        include /etc/nginx/snippets/${APP_NAME}-proxy.conf;
+    }
+
+    location = /api/admin/login {
+        limit_req zone=seka_login burst=3 nodelay;
+        include /etc/nginx/snippets/${APP_NAME}-proxy.conf;
+    }
+
+    location ^~ /admin {
+        include /etc/nginx/snippets/${APP_NAME}-admin-noindex.conf;
+        limit_req zone=seka_admin burst=20 nodelay;
+        limit_conn seka_conn 10;
+        include /etc/nginx/snippets/${APP_NAME}-proxy.conf;
+    }
+
+    location / {
+        if (\$seka_blocked_bot) { return 403; }
+        limit_req zone=seka_global burst=40 nodelay;
+        limit_conn seka_conn 30;
+        include /etc/nginx/snippets/${APP_NAME}-proxy.conf;
+    }
+}
+NGINX
+
+ln -sf "/etc/nginx/sites-available/${APP_NAME}" "/etc/nginx/sites-enabled/${APP_NAME}"
+fi
+nginx -t
+systemctl reload nginx
 
 echo "==> Restarting service"
 systemctl restart "${APP_NAME}"

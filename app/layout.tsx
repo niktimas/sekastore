@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google";
 import { OrderModalProvider } from "@/components/order-modal";
+import { SiteAnalytics } from "@/components/site-analytics";
 import { brand } from "@/lib/site";
 import "./globals.css";
 
@@ -39,7 +40,10 @@ export default function RootLayout({
   return (
     <html lang="ru" className={`${inter.variable} ${manrope.variable}`}>
       <body>
-        <OrderModalProvider>{children}</OrderModalProvider>
+        <OrderModalProvider>
+          <SiteAnalytics />
+          {children}
+        </OrderModalProvider>
       </body>
     </html>
   );

@@ -6,7 +6,8 @@ const links = [
   { href: "/admin/leads", label: "Заявки" },
   { href: "/admin/inventory", label: "Наличие" },
   { href: "/admin/build-options", label: "Компоненты" },
-  { href: "/admin/models", label: "Модели" }
+  { href: "/admin/models", label: "Модели" },
+  { href: "/admin/analytics", label: "Метрики" }
 ];
 
 export function AdminNav() {

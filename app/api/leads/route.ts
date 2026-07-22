@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { bikeModels } from "@/lib/catalog";
 import { prisma } from "@/lib/prisma";
+import { getUserAgent, isBlockedBotUserAgent, validateHumanForm } from "@/lib/request-security";
 
 const leadSchema = z
   .object({
@@ -16,13 +17,21 @@ const leadSchema = z
     groupsetOption: z.string().trim().optional(),
     handlebarOption: z.string().trim().optional(),
     wheelOption: z.string().trim().optional(),
-    message: z.string().trim().optional()
+    message: z.string().trim().optional(),
+    website: z.string().trim().optional(),
+    formStartedAt: z.string().trim().optional()
   })
   .refine((data) => Boolean(data.phone || data.email), {
     message: "Укажите телефон или email"
   });
 
 export async function POST(request: Request) {
+  const userAgent = getUserAgent(request);
+
+  if (!userAgent || isBlockedBotUserAgent(userAgent)) {
+    return NextResponse.json({ message: "Заявка не прошла антиспам-проверку." }, { status: 403 });
+  }
+
   const json = await request.json().catch(() => null);
   const parsed = leadSchema.safeParse(json);
 
@@ -31,6 +40,11 @@ export async function POST(request: Request) {
       { message: parsed.error.issues[0]?.message ?? "Проверьте данные заявки" },
       { status: 400 }
     );
+  }
+
+  const humanError = validateHumanForm(parsed.data);
+  if (humanError) {
+    return NextResponse.json({ message: humanError }, { status: 400 });
   }
 
   const catalogModel = bikeModels.find((model) => model.slug === parsed.data.modelSlug);

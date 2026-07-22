@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { getUserAgent, isBlockedBotUserAgent, validateHumanForm } from "@/lib/request-security";
 
 const orderSchema = z
   .object({
@@ -11,18 +12,31 @@ const orderSchema = z
     name: z.string().min(2, "Укажите имя"),
     phone: z.string().trim().optional(),
     email: z.string().trim().email("Некорректный email").optional().or(z.literal("")),
-    message: z.string().trim().optional()
+    message: z.string().trim().optional(),
+    website: z.string().trim().optional(),
+    formStartedAt: z.string().trim().optional()
   })
   .refine((data) => Boolean(data.phone || data.email), {
     message: "Укажите телефон или email"
   });
 
 export async function POST(request: Request) {
+  const userAgent = getUserAgent(request);
+
+  if (!userAgent || isBlockedBotUserAgent(userAgent)) {
+    return NextResponse.json({ message: "Заявка не прошла антиспам-проверку." }, { status: 403 });
+  }
+
   const json = await request.json().catch(() => null);
   const parsed = orderSchema.safeParse(json);
 
   if (!parsed.success) {
     return NextResponse.json({ message: parsed.error.issues[0]?.message ?? "Проверьте данные" }, { status: 400 });
+  }
+
+  const humanError = validateHumanForm(parsed.data);
+  if (humanError) {
+    return NextResponse.json({ message: humanError }, { status: 400 });
   }
 
   const details = [

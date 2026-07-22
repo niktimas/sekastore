@@ -2,6 +2,7 @@
 
 import { X } from "lucide-react";
 import { createContext, useContext, useEffect, useMemo, useState, useTransition } from "react";
+import { trackSiteEvent } from "@/components/site-analytics";
 
 type OrderPayload = {
   title: string;
@@ -29,13 +30,16 @@ export function useOrderModal() {
 
 export function OrderModalProvider({ children }: { children: React.ReactNode }) {
   const [payload, setPayload] = useState<OrderPayload | null>(null);
+  const [formStartedAt, setFormStartedAt] = useState(() => Date.now());
   const [status, setStatus] = useState("");
   const [isPending, startTransition] = useTransition();
   const value = useMemo(
     () => ({
       openOrder: (nextPayload: OrderPayload) => {
         setStatus("");
+        setFormStartedAt(Date.now());
         setPayload(nextPayload);
+        trackSiteEvent({ type: "form_open", target: nextPayload.title });
       }
     }),
     []
@@ -58,6 +62,7 @@ export function OrderModalProvider({ children }: { children: React.ReactNode }) 
       });
 
       if (response.ok) {
+        trackSiteEvent({ type: "form_submit", target: payload?.title ?? "order-modal" });
         setStatus("Заявка отправлена. Мы свяжемся с вами для подтверждения.");
         return;
       }
@@ -94,6 +99,11 @@ export function OrderModalProvider({ children }: { children: React.ReactNode }) 
             <input name="itemDetails" type="hidden" value={payload.details ?? ""} />
             <input name="itemStatus" type="hidden" value={payload.status ?? ""} />
             <input name="itemPrice" type="hidden" value={payload.price ?? ""} />
+            <input name="formStartedAt" type="hidden" value={formStartedAt} />
+            <label className="bot-field" aria-hidden="true">
+              <span>Сайт</span>
+              <input name="website" tabIndex={-1} autoComplete="off" />
+            </label>
 
             <label className="field">
               <span>Имя</span>
@@ -112,7 +122,7 @@ export function OrderModalProvider({ children }: { children: React.ReactNode }) 
               <textarea name="message" placeholder="Удобное время связи, доставка, вопросы по комплектации" />
             </label>
 
-            <button className="button button--dark" type="submit" disabled={isPending}>
+            <button className="button button--dark" type="submit" disabled={isPending} data-track data-track-label="Отправить заявку">
               {isPending ? "Отправка..." : "Отправить заявку"}
             </button>
             <p className="form-status" role="status">

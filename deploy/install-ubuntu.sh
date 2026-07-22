@@ -26,6 +26,7 @@ CREDENTIALS_FILE="/root/${APP_NAME}-credentials.txt"
 DB_PASSWORD=""
 ADMIN_PASSWORD=""
 NEXTAUTH_SECRET=""
+ANALYTICS_SALT=""
 
 if [[ "${EUID}" -ne 0 ]]; then
   echo "Run as root: sudo bash deploy/install-ubuntu.sh"
@@ -67,6 +68,7 @@ if [[ -f "${APP_DIR}/.env" && "${RESET_CREDENTIALS:-0}" != "1" ]]; then
   DB_PASSWORD="$(read_database_password "${APP_DIR}/.env")"
   ADMIN_PASSWORD="$(read_env_value "ADMIN_PASSWORD" "${APP_DIR}/.env")"
   NEXTAUTH_SECRET="$(read_env_value "ADMIN_SESSION_SECRET" "${APP_DIR}/.env")"
+  ANALYTICS_SALT="$(read_env_value "ANALYTICS_SALT" "${APP_DIR}/.env")"
 fi
 
 if [[ -z "${DB_PASSWORD}" ]]; then
@@ -77,6 +79,9 @@ if [[ -z "${ADMIN_PASSWORD}" ]]; then
 fi
 if [[ -z "${NEXTAUTH_SECRET}" ]]; then
   NEXTAUTH_SECRET="$(openssl rand -hex 32)"
+fi
+if [[ -z "${ANALYTICS_SALT}" ]]; then
+  ANALYTICS_SALT="$(openssl rand -hex 32)"
 fi
 
 echo "==> Syncing project to ${APP_DIR}"
@@ -143,6 +148,7 @@ NEXT_PUBLIC_SITE_URL="https://${PRIMARY_DOMAIN}"
 ADMIN_EMAIL="${ADMIN_EMAIL}"
 ADMIN_PASSWORD="${ADMIN_PASSWORD}"
 ADMIN_SESSION_SECRET="${NEXTAUTH_SECRET}"
+ANALYTICS_SALT="${ANALYTICS_SALT}"
 NODE_ENV="production"
 ENV
 chown "${APP_USER}:${APP_USER}" "${APP_DIR}/.env"
@@ -215,7 +221,13 @@ limit_req_zone $binary_remote_addr zone=seka_global:20m rate=8r/s;
 limit_req_zone $binary_remote_addr zone=seka_forms:10m rate=3r/m;
 limit_req_zone $binary_remote_addr zone=seka_login:10m rate=5r/m;
 limit_req_zone $binary_remote_addr zone=seka_admin:10m rate=2r/s;
+limit_req_zone $binary_remote_addr zone=seka_metrics:10m rate=30r/m;
 limit_conn_zone $binary_remote_addr zone=seka_conn:10m;
+
+map $http_user_agent $seka_blocked_bot {
+    default 0;
+    ~*(gptbot|chatgpt-user|ccbot|anthropic-ai|claudebot|perplexitybot|bytespider|amazonbot|applebot-extended|semrushbot|ahrefsbot|mj12bot|dotbot|petalbot|scrapy|python-requests|curl|wget|httpclient|headlesschrome) 1;
+}
 NGINX
 
 cat > "/etc/nginx/snippets/${APP_NAME}-security-headers.conf" <<'NGINX'
@@ -259,12 +271,28 @@ server {
 
     include /etc/nginx/snippets/${APP_NAME}-security-headers.conf;
 
+    location = /robots.txt {
+        include /etc/nginx/snippets/${APP_NAME}-proxy.conf;
+    }
+
+    location = /sitemap.xml {
+        include /etc/nginx/snippets/${APP_NAME}-proxy.conf;
+    }
+
+    location = /api/metrics {
+        if (\$seka_blocked_bot) { return 403; }
+        limit_req zone=seka_metrics burst=20 nodelay;
+        include /etc/nginx/snippets/${APP_NAME}-proxy.conf;
+    }
+
     location = /api/orders {
+        if (\$seka_blocked_bot) { return 403; }
         limit_req zone=seka_forms burst=3 nodelay;
         include /etc/nginx/snippets/${APP_NAME}-proxy.conf;
     }
 
     location = /api/leads {
+        if (\$seka_blocked_bot) { return 403; }
         limit_req zone=seka_forms burst=3 nodelay;
         include /etc/nginx/snippets/${APP_NAME}-proxy.conf;
     }
@@ -282,6 +310,7 @@ server {
     }
 
     location / {
+        if (\$seka_blocked_bot) { return 403; }
         limit_req zone=seka_global burst=40 nodelay;
         limit_conn seka_conn 30;
         include /etc/nginx/snippets/${APP_NAME}-proxy.conf;

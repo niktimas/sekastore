@@ -4,6 +4,7 @@ import { Send } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
 import type { BikeModel } from "@/lib/catalog";
 import { formatPrice, getFrameOptionsForModel, groupsetOptions, handlebarOptions, wheelOptions } from "@/lib/inventory";
+import { trackSiteEvent } from "@/components/site-analytics";
 
 type OptionChoice = {
   brand?: string | null;
@@ -42,11 +43,16 @@ export function LeadForm({
 }: LeadFormProps) {
   const [status, setStatus] = useState("");
   const [selectedColorSlug, setSelectedColorSlug] = useState(model.heroColorSlug);
+  const [formStartedAt] = useState(() => Date.now());
   const [isPending, startTransition] = useTransition();
   const frameOptions = dbFrameOptions ?? getFrameOptionsForModel(model.slug);
   const availableGroupsets = dbGroupsets ?? groupsetOptions;
   const availableWheels = dbWheels ?? wheelOptions;
   const availableHandlebars = dbHandlebars ?? handlebarOptions;
+
+  useEffect(() => {
+    trackSiteEvent({ type: "form_open", target: model.name });
+  }, [model.name]);
 
   useEffect(() => {
     function handleColorSelected(event: Event) {
@@ -73,6 +79,7 @@ export function LeadForm({
       });
 
       if (response.ok) {
+        trackSiteEvent({ type: "form_submit", target: model.name });
         setStatus("Заявка сохранена. Мы свяжемся с вами после проверки наличия.");
         return;
       }
@@ -85,6 +92,11 @@ export function LeadForm({
   return (
     <form className="form" action={submit}>
       <input type="hidden" name="modelSlug" value={model.slug} />
+      <input type="hidden" name="formStartedAt" value={formStartedAt} />
+      <label className="bot-field" aria-hidden="true">
+        <span>Сайт</span>
+        <input name="website" tabIndex={-1} autoComplete="off" />
+      </label>
       {frameOptions.length ? (
         <label className="field">
           <span>Фрейм из наличия</span>
@@ -169,7 +181,7 @@ export function LeadForm({
         <span>Комментарий</span>
         <textarea name="message" placeholder="Например: интересует фреймсет или сборка с колесами" />
       </label>
-      <button className="button button--dark" type="submit" disabled={isPending}>
+      <button className="button button--dark" type="submit" disabled={isPending} data-track data-track-label="Оставить заявку">
         {isPending ? "Отправка..." : "Оставить заявку"} <Send size={17} />
       </button>
       <p className="form-status" role="status">
