@@ -5,7 +5,6 @@ import { createBuildOptionAction, deleteBuildOptionAction, updateBuildOptionActi
 import { isAdminAuthenticated } from "@/lib/admin-auth";
 import { adminBrands, resolveAdminBrand } from "@/lib/admin-brand";
 import { prisma } from "@/lib/prisma";
-import { formatTaveloPrice, taveloCockpit } from "@/lib/tavelo-catalog";
 
 export const metadata: Metadata = {
   title: "Компоненты | Админка"
@@ -33,6 +32,10 @@ function price(value: number) {
   return new Intl.NumberFormat("ru-RU").format(value);
 }
 
+function isBrandApplicable(value: string, brand: string) {
+  return value.split(",").map((item) => item.trim()).includes(brand);
+}
+
 type AdminBuildOptionsPageProps = {
   searchParams: Promise<{ brand?: string }>;
 };
@@ -44,27 +47,10 @@ export default async function AdminBuildOptionsPage({ searchParams }: AdminBuild
 
   const brand = await resolveAdminBrand(await searchParams);
 
-  if (brand === "tavelo") {
-    return (
-      <main className="admin-page">
-        <AdminNav brand={brand} />
-        <section className="page-title">
-          <p className="eyebrow">Компоненты / {adminBrands[brand].label}</p>
-          <h1>Компоненты Tavelo</h1>
-          <p>Сейчас на Tavelo-витрине опубликован базовый компонент для сборки. Полное редактирование Tavelo-компонентов можно вынести в базу отдельным следующим шагом.</p>
-        </section>
-        <section className="admin-grid">
-          <div className="admin-card">
-            <span>Кокпит</span>
-            <strong>{taveloCockpit.name}</strong>
-            <small>{formatTaveloPrice(taveloCockpit.price)} / {taveloCockpit.weight}</small>
-          </div>
-        </section>
-      </main>
-    );
-  }
-
   const options = await prisma.buildOption.findMany({
+    where: {
+      applicableBrands: { contains: brand }
+    },
     orderBy: [{ optionType: "asc" }, { sortOrder: "asc" }, { name: "asc" }]
   });
 
@@ -73,8 +59,8 @@ export default async function AdminBuildOptionsPage({ searchParams }: AdminBuild
       <AdminNav brand={brand} />
       <section className="page-title">
         <p className="eyebrow">Админка</p>
-        <h1>Компоненты</h1>
-        <p>Цены отсюда используются в конфигураторе модели.</p>
+        <h1>Компоненты {adminBrands[brand].label}</h1>
+        <p>Цены и наличие общие для магазина. Поле применимости определяет, на каких сайтах показывать компонент.</p>
       </section>
 
       <section className="admin-panel">
@@ -110,6 +96,12 @@ export default async function AdminBuildOptionsPage({ searchParams }: AdminBuild
           <input name="source" placeholder="Источник" />
           <textarea name="description" placeholder="Описание" />
           <label className="admin-check">
+            <input name="applicableBrands" type="checkbox" value="seka" defaultChecked /> SEKA
+          </label>
+          <label className="admin-check">
+            <input name="applicableBrands" type="checkbox" value="tavelo" defaultChecked /> Tavelo
+          </label>
+          <label className="admin-check">
             <input name="isPreorder" type="checkbox" /> Предзаказ
           </label>
           <label className="admin-check">
@@ -127,7 +119,7 @@ export default async function AdminBuildOptionsPage({ searchParams }: AdminBuild
             <div className="admin-panel__head">
               <div>
                 <h2>{option.name}</h2>
-                <p>{option.brand ? `${option.brand} / ` : ""}{option.optionType} / {price(option.price)} ₽ / {availabilityOptions.find(([value]) => value === option.availability)?.[1] ?? option.availability} / {ridingStyleOptions.find(([value]) => value === option.ridingStyle)?.[1] ?? option.ridingStyle}</p>
+                <p>{option.brand ? `${option.brand} / ` : ""}{option.optionType} / {price(option.price)} ₽ / {availabilityOptions.find(([value]) => value === option.availability)?.[1] ?? option.availability} / {ridingStyleOptions.find(([value]) => value === option.ridingStyle)?.[1] ?? option.ridingStyle} / {option.applicableBrands}</p>
               </div>
               <form action={deleteBuildOptionAction}>
                 <input name="id" type="hidden" value={option.id} />
@@ -167,6 +159,12 @@ export default async function AdminBuildOptionsPage({ searchParams }: AdminBuild
               <input name="sortOrder" type="number" defaultValue={option.sortOrder} />
               <input name="source" defaultValue={option.source ?? ""} placeholder="Источник" />
               <textarea name="description" defaultValue={option.description ?? ""} placeholder="Описание" />
+              <label className="admin-check">
+                <input name="applicableBrands" type="checkbox" value="seka" defaultChecked={isBrandApplicable(option.applicableBrands, "seka")} /> SEKA
+              </label>
+              <label className="admin-check">
+                <input name="applicableBrands" type="checkbox" value="tavelo" defaultChecked={isBrandApplicable(option.applicableBrands, "tavelo")} /> Tavelo
+              </label>
               <label className="admin-check">
                 <input name="isPreorder" type="checkbox" defaultChecked={option.isPreorder} /> Предзаказ
               </label>

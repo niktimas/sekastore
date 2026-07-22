@@ -50,7 +50,7 @@ async function getConfiguratorOptions(modelSlug: string) {
         orderBy: [{ sortOrder: "asc" }, { updatedAt: "desc" }]
       }),
       prisma.buildOption.findMany({
-        where: { isActive: true },
+        where: { isActive: true, applicableBrands: { contains: "seka" } },
         orderBy: [{ optionType: "asc" }, { sortOrder: "asc" }, { name: "asc" }]
       })
     ]);

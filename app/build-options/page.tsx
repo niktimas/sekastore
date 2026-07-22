@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
+import { Header } from "@/components/header";
 import { OrderButton } from "@/components/order-button";
 import { formatPrice } from "@/lib/inventory";
 import { prisma } from "@/lib/prisma";
@@ -32,7 +32,11 @@ const ridingStyleLabels: Record<string, string> = {
 };
 
 function actionLabel(availability: string) {
-  return availability === "in_stock" ? "Заказать из наличия" : availability === "preorder" ? "Оформить предзаказ" : "Оставить заявку";
+  if (availability === "in_stock") {
+    return "Заказать из наличия";
+  }
+
+  return availability === "preorder" ? "Оформить предзаказ" : "Оставить заявку";
 }
 
 async function getBuildOptions() {
@@ -40,6 +44,7 @@ async function getBuildOptions() {
     return await prisma.buildOption.findMany({
       where: {
         isActive: true,
+        applicableBrands: { contains: "seka" },
         optionType: { in: ["groupset", "handlebar", "wheels"] }
       },
       orderBy: [{ ridingStyle: "desc" }, { optionType: "asc" }, { sortOrder: "asc" }, { price: "asc" }]
@@ -86,8 +91,8 @@ export default async function BuildOptionsPage() {
       <main>
         <section className="page-title">
           <p className="eyebrow">Компоненты</p>
-          <h1>Системы и кокпиты для сборки</h1>
-          <p>Позиции под заказ для полной сборки велосипеда на базе фреймсетов SEKA.</p>
+          <h1>Системы, колеса и кокпиты для сборки</h1>
+          <p>Общий склад Carbonara Bike: цены и наличие едины, а совместимость зависит от выбранного фреймсета.</p>
         </section>
 
         <section className="component-catalog" aria-label="Список компонентов">
@@ -107,7 +112,7 @@ export default async function BuildOptionsPage() {
                     <div className="component-row__meta">
                       <span>{typeLabels[option.optionType] ?? option.optionType}</span>
                       <span>{ridingStyleLabels[option.ridingStyle] ?? option.ridingStyle}</span>
-                      {option.availability ? <strong data-status={option.availability}>{availabilityLabels[option.availability] ?? option.availability}</strong> : null}
+                      <strong data-status={option.availability}>{availabilityLabels[option.availability] ?? option.availability}</strong>
                     </div>
                     <h2>{option.brand ? `${option.brand} ` : ""}{option.name}</h2>
                     {option.description ? <p>{option.description}</p> : null}

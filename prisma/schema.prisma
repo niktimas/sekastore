@@ -120,6 +120,7 @@ model BuildOption {
   isPreorder     Boolean         @default(false) @map("is_preorder")
   availability   String          @default("order")
   ridingStyle    String          @default("road") @map("riding_style")
+  applicableBrands String        @default("seka,tavelo") @map("applicable_brands")
   sortOrder      Int             @default(100) @map("sort_order")
   isActive       Boolean         @default(true) @map("is_active")
   inventoryItems InventoryItem[]

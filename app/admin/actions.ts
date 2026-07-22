@@ -45,6 +45,14 @@ function availabilityValue(formData: FormData) {
   return value || (checkbox(formData, "isPreorder") ? "preorder" : "order");
 }
 
+function applicableBrandsValue(formData: FormData) {
+  const brands = formData
+    .getAll("applicableBrands")
+    .filter((value): value is string => typeof value === "string" && ["seka", "tavelo"].includes(value));
+
+  return brands.length ? Array.from(new Set(brands)).join(",") : "seka,tavelo";
+}
+
 function nullableId(formData: FormData, key: string) {
   const value = text(formData, key);
   return value.length > 0 ? value : null;
@@ -187,12 +195,14 @@ export async function createBuildOptionAction(formData: FormData) {
       isPreorder: availabilityValue(formData) === "preorder",
       availability: availabilityValue(formData),
       ridingStyle: text(formData, "ridingStyle") || "road",
+      applicableBrands: applicableBrandsValue(formData),
       sortOrder: intValue(formData, "sortOrder", 100),
       isActive: checkbox(formData, "isActive")
     }
   });
 
   revalidatePath("/build-options");
+  revalidatePath("/tavelo/build-options");
   revalidatePath("/admin/build-options");
 }
 
@@ -213,12 +223,14 @@ export async function updateBuildOptionAction(formData: FormData) {
       isPreorder: availabilityValue(formData) === "preorder",
       availability: availabilityValue(formData),
       ridingStyle: text(formData, "ridingStyle") || "road",
+      applicableBrands: applicableBrandsValue(formData),
       sortOrder: intValue(formData, "sortOrder", 100),
       isActive: checkbox(formData, "isActive")
     }
   });
 
   revalidatePath("/build-options");
+  revalidatePath("/tavelo/build-options");
   revalidatePath("/admin/build-options");
 }
 
@@ -233,6 +245,7 @@ export async function deleteBuildOptionAction(formData: FormData) {
   }
 
   revalidatePath("/build-options");
+  revalidatePath("/tavelo/build-options");
   revalidatePath("/admin/build-options");
 }
 

@@ -163,6 +163,7 @@ async function main() {
         isPreorder: option.isPreorder ?? false,
         availability: option.availability ?? (option.isPreorder ? "preorder" : "order"),
         ridingStyle: option.ridingStyle ?? "road",
+        applicableBrands: "seka,tavelo",
         sortOrder: index + 1,
         isActive: true
       },
@@ -177,6 +178,7 @@ async function main() {
         isPreorder: option.isPreorder ?? false,
         availability: option.availability ?? (option.isPreorder ? "preorder" : "order"),
         ridingStyle: option.ridingStyle ?? "road",
+        applicableBrands: "seka,tavelo",
         sortOrder: index + 1,
         isActive: true
       }
@@ -198,6 +200,7 @@ async function main() {
         isPreorder: wheel.status === "preorder",
         availability: wheel.status,
         ridingStyle: ridingStyleForWheel(wheel.name),
+        applicableBrands: "seka,tavelo",
         sortOrder: 1000 + index + 1,
         isActive: true
       },
@@ -212,6 +215,7 @@ async function main() {
         isPreorder: wheel.status === "preorder",
         availability: wheel.status,
         ridingStyle: ridingStyleForWheel(wheel.name),
+        applicableBrands: "seka,tavelo",
         sortOrder: 1000 + index + 1,
         isActive: true
       }
