@@ -10,7 +10,8 @@ BRANCH="${BRANCH:-main}"
 RUN_SEED="${RUN_SEED:-0}"
 PRIMARY_DOMAIN="seka-bike.ru"
 SECONDARY_DOMAIN="seka-bike.store"
-DOMAINS=("${PRIMARY_DOMAIN}" "www.${PRIMARY_DOMAIN}" "${SECONDARY_DOMAIN}")
+TAVELO_DOMAIN="tavelo.ru"
+DOMAINS=("${PRIMARY_DOMAIN}" "www.${PRIMARY_DOMAIN}" "${SECONDARY_DOMAIN}" "${TAVELO_DOMAIN}" "www.${TAVELO_DOMAIN}")
 
 if [[ "${ADD_WWW_SECONDARY:-0}" == "1" ]]; then
   DOMAINS+=("www.${SECONDARY_DOMAIN}")
@@ -133,6 +134,21 @@ NGINX
 
 if [[ -f "/etc/nginx/sites-available/${APP_NAME}" ]] && grep -q "listen 443" "/etc/nginx/sites-available/${APP_NAME}"; then
   echo "==> Keeping existing HTTPS Nginx site config. Run install script on a clean server to regenerate the full site block."
+  python3 - <<PY
+from pathlib import Path
+path = Path("/etc/nginx/sites-available/${APP_NAME}")
+text = path.read_text()
+domains = "${DOMAINS[*]}"
+lines = []
+for line in text.splitlines():
+    stripped = line.strip()
+    if stripped.startswith("server_name ") and stripped != "server_name _;":
+        indent = line[: len(line) - len(line.lstrip())]
+        lines.append(f"{indent}server_name {domains};")
+    else:
+        lines.append(line)
+path.write_text("\\n".join(lines) + "\\n")
+PY
 else
 cat > "/etc/nginx/sites-available/${APP_NAME}" <<NGINX
 server {
@@ -203,6 +219,11 @@ ln -sf "/etc/nginx/sites-available/${APP_NAME}" "/etc/nginx/sites-enabled/${APP_
 fi
 nginx -t
 systemctl reload nginx
+
+if [[ "${ISSUE_TAVELO_SSL:-0}" == "1" ]]; then
+  echo "==> Requesting SSL for Tavelo domains"
+  certbot --nginx --non-interactive --agree-tos --redirect --email "niktimas696@gmail.com" -d "${TAVELO_DOMAIN}" -d "www.${TAVELO_DOMAIN}" || true
+fi
 
 echo "==> Restarting service"
 systemctl restart "${APP_NAME}"

@@ -618,6 +618,551 @@ img {
   overflow: hidden;
 }
 
+.tavelo-shell {
+  min-height: 100vh;
+  background: #121212;
+  color: #f4f4ef;
+  font-family: var(--font-manrope), Arial, sans-serif;
+}
+
+.tavelo-shell a {
+  color: inherit;
+}
+
+.tavelo-topline {
+  background: #9cff5f;
+  color: #050505;
+  padding: 9px 24px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+}
+
+.tavelo-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  min-height: 112px;
+  padding: 0 clamp(24px, 6vw, 76px);
+  background: #282828;
+}
+
+.tavelo-logo {
+  font-family: var(--font-inter), Arial, sans-serif;
+  font-size: clamp(34px, 5vw, 64px);
+  font-weight: 1000;
+  font-style: italic;
+  letter-spacing: -0.08em;
+  text-decoration: none;
+}
+
+.tavelo-nav__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: clamp(18px, 4vw, 58px);
+  font-weight: 850;
+}
+
+.tavelo-nav__links a {
+  text-decoration: none;
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.tavelo-nav__links a:hover {
+  color: #9cff5f;
+  transform: translateY(-1px);
+}
+
+.tavelo-hero {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(18px, 4vw, 64px);
+  align-items: center;
+  min-height: calc(100svh - 145px);
+  padding: clamp(38px, 7vw, 90px) clamp(24px, 6vw, 76px);
+  overflow: hidden;
+}
+
+.tavelo-hero__copy {
+  position: relative;
+  z-index: 1;
+  animation: taveloFadeUp 650ms ease both;
+}
+
+.tavelo-kicker {
+  margin: 0 0 12px;
+  color: #9cff5f;
+  font-size: 12px;
+  font-weight: 950;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tavelo-hero h1 {
+  margin: 0;
+  font-family: var(--font-inter), Arial, sans-serif;
+  font-size: clamp(78px, 15vw, 190px);
+  font-weight: 1000;
+  font-style: italic;
+  letter-spacing: -0.09em;
+  line-height: 0.82;
+}
+
+.tavelo-hero p:not(.tavelo-kicker),
+.tavelo-section__head p:not(.tavelo-kicker),
+.tavelo-feature p,
+.tavelo-cta p:not(.tavelo-kicker),
+.tavelo-simple-page > p {
+  max-width: 700px;
+  color: rgba(244, 244, 239, 0.72);
+  font-size: clamp(16px, 1.7vw, 22px);
+  line-height: 1.5;
+}
+
+.tavelo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.tavelo-button,
+.tavelo-link-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 0;
+  background: #9cff5f;
+  color: #050505;
+  padding: 15px 24px;
+  font: inherit;
+  font-weight: 950;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+}
+
+.tavelo-button:hover,
+.tavelo-link-button:hover {
+  transform: translateY(-2px);
+  background: #ffffff;
+}
+
+.tavelo-button--ghost {
+  background: transparent;
+  color: #f4f4ef;
+  box-shadow: inset 0 0 0 1px rgba(244, 244, 239, 0.32);
+}
+
+.tavelo-hero__media {
+  position: relative;
+  min-height: min(58vw, 620px);
+  animation: taveloFloatIn 760ms ease both;
+}
+
+.tavelo-hero__media img,
+.tavelo-product__image img,
+.tavelo-model__media img,
+.tavelo-color__image img,
+.tavelo-feature__image img,
+.tavelo-stock-list article > div img {
+  object-fit: contain;
+}
+
+.tavelo-section {
+  padding: clamp(54px, 8vw, 112px) clamp(24px, 6vw, 76px);
+}
+
+.tavelo-runner {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  gap: clamp(18px, 5vw, 70px);
+  overflow-x: auto;
+  border-top: 1px solid rgba(244, 244, 239, 0.1);
+  border-bottom: 1px solid rgba(244, 244, 239, 0.1);
+  background: rgba(18, 18, 18, 0.92);
+  padding-top: 18px;
+  padding-bottom: 18px;
+  backdrop-filter: blur(16px);
+}
+
+.tavelo-runner span {
+  flex: 0 0 auto;
+  color: rgba(244, 244, 239, 0.62);
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.tavelo-section__head {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 34px;
+}
+
+.tavelo-section__head h2,
+.tavelo-feature h2,
+.tavelo-cta h2,
+.tavelo-simple-page h1,
+.tavelo-model h1 {
+  max-width: 940px;
+  margin: 0;
+  font-family: var(--font-inter), Arial, sans-serif;
+  font-size: clamp(42px, 7vw, 96px);
+  font-weight: 950;
+  letter-spacing: -0.04em;
+  line-height: 0.94;
+}
+
+.tavelo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(30px, 5vw, 74px) clamp(22px, 4vw, 56px);
+}
+
+.tavelo-product {
+  display: grid;
+  gap: 18px;
+}
+
+.tavelo-product__image {
+  position: relative;
+  display: block;
+  aspect-ratio: 1.22;
+  background: #191919;
+  overflow: hidden;
+}
+
+.tavelo-product__image img {
+  padding: 7%;
+  transform: scale(1);
+  transition: transform 260ms ease, opacity 260ms ease;
+}
+
+.tavelo-product:hover .tavelo-product__image img {
+  transform: scale(1.045);
+}
+
+.tavelo-product__meta {
+  display: grid;
+  gap: 10px;
+}
+
+.tavelo-product__meta span {
+  color: rgba(244, 244, 239, 0.5);
+  font-size: 12px;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.tavelo-product__meta strong {
+  font-size: 20px;
+}
+
+.tavelo-product__meta p {
+  min-height: 54px;
+  margin: 0;
+  color: rgba(244, 244, 239, 0.64);
+  line-height: 1.45;
+}
+
+.tavelo-product__meta div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  font-weight: 900;
+}
+
+.tavelo-product__meta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #9cff5f;
+}
+
+.tavelo-feature {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.8fr) minmax(0, 1fr);
+  gap: clamp(24px, 6vw, 76px);
+  align-items: center;
+  padding: clamp(54px, 8vw, 110px) clamp(24px, 6vw, 76px);
+  background: #242424;
+}
+
+.tavelo-feature--compact {
+  margin-top: 44px;
+}
+
+.tavelo-feature strong,
+.tavelo-price {
+  display: block;
+  margin: 20px 0;
+  font-size: clamp(28px, 4vw, 52px);
+  line-height: 1;
+}
+
+.tavelo-feature__image {
+  position: relative;
+  min-height: min(44vw, 480px);
+}
+
+.tavelo-cta {
+  padding: clamp(70px, 10vw, 140px) clamp(24px, 6vw, 76px);
+  background: #9cff5f;
+  color: #050505;
+}
+
+.tavelo-cta .tavelo-kicker,
+.tavelo-cta p {
+  color: #050505;
+}
+
+.tavelo-cta .tavelo-button {
+  margin-top: 28px;
+  background: #050505;
+  color: #f4f4ef;
+}
+
+.tavelo-model {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(340px, 0.95fr);
+  gap: clamp(24px, 5vw, 72px);
+  align-items: center;
+  padding: clamp(34px, 6vw, 76px);
+}
+
+.tavelo-back {
+  grid-column: 1 / -1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #9cff5f;
+  font-weight: 900;
+}
+
+.tavelo-model__media {
+  position: relative;
+  min-height: min(58vw, 640px);
+  background: #202020;
+}
+
+.tavelo-model__media img {
+  padding: 7%;
+}
+
+.tavelo-model__body p {
+  color: rgba(244, 244, 239, 0.7);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.tavelo-specs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 24px 0;
+  background: rgba(244, 244, 239, 0.12);
+}
+
+.tavelo-specs div {
+  display: grid;
+  gap: 6px;
+  background: #171717;
+  padding: 18px;
+}
+
+.tavelo-specs span {
+  color: rgba(244, 244, 239, 0.46);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.tavelo-color-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.tavelo-color {
+  display: grid;
+  gap: 14px;
+}
+
+.tavelo-color__image {
+  position: relative;
+  aspect-ratio: 1.28;
+  background: #202020;
+}
+
+.tavelo-color__image img {
+  padding: 7%;
+}
+
+.tavelo-color h3 {
+  margin: 8px 0 4px;
+  font-size: 22px;
+}
+
+.tavelo-color p {
+  margin: 0 0 14px;
+  color: rgba(244, 244, 239, 0.58);
+}
+
+.tavelo-color span {
+  display: inline-block;
+  width: 32px;
+  height: 6px;
+}
+
+.tavelo-link-button {
+  padding: 0;
+  background: transparent;
+  color: #9cff5f;
+  text-decoration: underline;
+}
+
+.tavelo-link-button:hover {
+  background: transparent;
+  color: #ffffff;
+}
+
+.tavelo-simple-page {
+  min-height: 70svh;
+  padding: clamp(48px, 8vw, 110px) clamp(24px, 6vw, 76px);
+}
+
+.tavelo-stock-list {
+  display: grid;
+  gap: 1px;
+  margin-top: 42px;
+  background: rgba(244, 244, 239, 0.12);
+}
+
+.tavelo-stock-list article {
+  display: grid;
+  grid-template-columns: 120px minmax(180px, 1fr) 90px 160px auto;
+  gap: 22px;
+  align-items: center;
+  background: #171717;
+  padding: 18px;
+}
+
+.tavelo-stock-list article > div {
+  position: relative;
+  width: 120px;
+  height: 78px;
+  background: #242424;
+}
+
+.tavelo-contacts div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 34px 0;
+}
+
+.tavelo-contacts a {
+  background: #9cff5f;
+  color: #050505;
+  padding: 12px 18px;
+  font-weight: 950;
+}
+
+.tavelo-contacts address {
+  color: rgba(244, 244, 239, 0.68);
+  font-style: normal;
+}
+
+.tavelo-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 28px;
+  align-items: end;
+  padding: 46px clamp(24px, 6vw, 76px);
+  border-top: 1px solid rgba(244, 244, 239, 0.1);
+  background: #050505;
+}
+
+.tavelo-footer p {
+  max-width: 620px;
+  color: rgba(244, 244, 239, 0.58);
+}
+
+.tavelo-footer nav {
+  display: flex;
+  gap: 18px;
+}
+
+@keyframes taveloFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes taveloFloatIn {
+  from {
+    opacity: 0;
+    transform: translateX(28px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@media (max-width: 900px) {
+  .tavelo-nav,
+  .tavelo-hero,
+  .tavelo-feature,
+  .tavelo-model,
+  .tavelo-footer {
+    grid-template-columns: 1fr;
+  }
+
+  .tavelo-nav {
+    justify-items: start;
+    padding-top: 18px;
+    padding-bottom: 18px;
+  }
+
+  .tavelo-nav__links {
+    justify-content: flex-start;
+  }
+
+  .tavelo-grid,
+  .tavelo-color-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tavelo-stock-list article {
+    grid-template-columns: 96px minmax(0, 1fr);
+  }
+
+  .tavelo-stock-list article > div {
+    width: 96px;
+    height: 72px;
+    grid-row: span 4;
+  }
+
+  .tavelo-footer nav {
+    flex-wrap: wrap;
+  }
+}
+
 .reference {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(280px, 0.55fr);

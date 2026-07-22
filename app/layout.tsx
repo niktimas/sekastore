@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://seka-bike.ru"),
   title: {
     default: brand.name,
-    template: `%s | ${brand.name}`
+    template: "%s"
   },
   description: "Официальный дистрибьютор велосипедов и фреймсетов SEKA в России.",
   openGraph: {
